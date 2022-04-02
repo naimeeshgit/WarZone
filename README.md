@@ -1,3 +1,5 @@
+A command line interface game
+
 # Requirements:
 1. sudo apt mpg123 install
 
