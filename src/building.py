@@ -101,7 +101,7 @@ class Canon(Building):
         array[self.X_coor][self.Y_coor] =  self.color + 'C' + Style.RESET_ALL 
         pseudo_array[self.X_coor][self.Y_coor] = 'C' + str(self.canon_id)
 
-    def attack(self, array, pseudo_array, king, barbarians):
+    def attack(self, array, pseudo_array, king, barbarians, archers):
         if(((self.X_coor-king.x_coor)**2 + (self.Y_coor - king.y_coor)**2 <= 36) and (king.x_coor != -1 and king.y_coor != -1) and king.health > 0):
                 array[self.X_coor][self.Y_coor] = Back.RED + 'C' + Style.RESET_ALL
                 king.health -= self.attack_power
@@ -116,7 +116,7 @@ class Canon(Building):
                         if i.health <= 0:
                             i.destroy(array, pseudo_array)
                         break
-        
+            
 
         
 

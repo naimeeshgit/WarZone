@@ -41,20 +41,27 @@ class GameBoard:
                 print(self.pseudo_array[i][j], end="")
             print()
 
-    def game_lost(self, king, barbarians, barbarian_count):
+    def game_lost(self, king, barbarians, barbarian_count, archers, archer_count):
         king_death = -1
         barbarians_death = -1
         if king.health <= 0:
             print(Fore.RED + "King is dead!")
             king_death = 0
         for i in barbarians:
-            if barbarian_count == 14:
+            if barbarian_count == 5:
                 if i.health > 0:
                     break
                 else:
                     barbarians_death = 0
+        for i in archers:
+            if archer_count == 6:
+                if i.health > 0:
+                    break
+                else:
+                    archers_death = 0
+
         
-        if(king_death == 0 and barbarians_death == 0):
+        if(king_death == 0 and barbarians_death == 0 and archers_death == 0):
             return True
         else:
             return False

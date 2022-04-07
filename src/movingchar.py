@@ -196,6 +196,19 @@ class king(Character):
         self.movement_speed = 1
         # self.color = Back.BLUE
 
+class Archer_Queen(Character):
+    def __init__(self, x_coor, y_coor, array, pseudo_array):
+        self.type = "Archer_Queen"
+        self.x_coor = x_coor
+        self.y_coor = y_coor
+        array[self.x_coor][self.y_coor] = "A"
+        pseudo_array[self.x_coor][self.y_coor] = "A"
+        self.health = gv.max_health_archer_queen
+        self.last_move = " "
+        self.attack_power = gv.attack_power_archer_queen
+        self.movement_speed = 1
+        # self.color = Back.BLUE
+
 
 class Nuke(Character):
     def __init__(self, x_coor, y_coor, array, pseudo_array):
@@ -520,3 +533,187 @@ class barbarians(Character):
                 "B" + Style.RESET_ALL
             pseudo_array[self.x_coor][self.y_coor] = self.color + \
                 "B" + Style.RESET_ALL
+
+
+class Archers(Character):
+    def __init__(self, x_coor, y_coor, array, pseudo_array, archer_count):
+        self.type = "Archers"
+        self.x_coor = x_coor
+        self.y_coor = y_coor
+        self.color = Back.GREEN
+        array[self.x_coor][self.y_coor] = self.color + "A" + Style.RESET_ALL
+        pseudo_array[self.x_coor][self.y_coor] = "A"
+        self.health = gv.max_health_archers
+        self.last_move = " "
+        self.attack_power = gv.attack_power_archers
+        self.barbarian_id = archer_count
+        self.movement_speed = 1
+
+    def move(self, array, pseudo_array, Universal_array):
+        # if any building except walls is in 3 tile range, dont move
+        old_x = self.x_coor
+        old_y = self.y_coor
+
+        attacked = False
+
+        if(self.health>0):
+
+            temp_x = self.x_coor
+            temp_y = self.y_coor
+            
+            if(self.last_move == "w" or self.last_move == "#"):
+                temp_x = self.x_coor - 1
+                temp_y = self.y_coor 
+            elif(self.last_move == "s" or self.last_move == "#"):
+                temp_x = self.x_coor + 1
+                temp_y = self.y_coor
+            elif(self.last_move == "a" or self.last_move == "#"):
+                temp_y = self.y_coor - 1
+                temp_x = self.x_coor
+            elif(self.last_move == "d" or self.last_move == "#"):
+                temp_y = self.y_coor + 1
+                temp_x = self.x_coor
+            
+            # find wall with temp_x and temp_y coordinates
+            for i in range(len(wall)):
+                if(wall[i].X_coor == temp_x and wall[i].Y_coor == temp_y):
+                    wall[i].damage(self.attack_power, array, pseudo_array)
+                    attacked = True
+                    break 
+
+            else: 
+            # now check if there is no building in range
+                for i in range(3):
+                    for j in Universal_array[i]:
+                        # check if its under range
+                        dist = ((self.x_coor-j.X_coor)**2 + (self.y_coor-j.Y_coor)**2)**0.5
+                        if(dist<=8):
+                            j.damage(self.attack_power, array, pseudo_array)
+                            attacked = True
+                
+
+            if(attacked == False):
+                # move
+                min_distance = 10000
+                i_temp, j_temp = 0, 0
+                for i in range(3):
+                    for j in range(len(Universal_array[i])):
+                        x_diff = abs(self.x_coor - Universal_array[i][j].X_coor)**2
+                        y_diff = abs(self.y_coor - Universal_array[i][j].Y_coor)**2
+                        euclidean = x_diff + y_diff
+                        if(min_distance >= euclidean):
+                            min_distance = euclidean
+                            i_temp = i
+                            j_temp = j
+
+                x_diff = abs(
+                    self.x_coor - Universal_array[i_temp][j_temp].X_coor)**2
+                y_diff = abs(
+                    self.y_coor - Universal_array[i_temp][j_temp].Y_coor)**2
+
+                if((x_diff == 1 or y_diff == 1) or (x_diff == 1 or y_diff == 0) or (x_diff == 0 or y_diff == 0) or (x_diff == 0 or y_diff == 1)):
+                    self.attack(array, pseudo_array)
+
+                if(self.x_coor > Universal_array[i_temp][j_temp].X_coor and self.y_coor == Universal_array[i_temp][j_temp].Y_coor and (pseudo_array[self.x_coor-1][self.y_coor] == ' ' or pseudo_array[self.x_coor-1][self.y_coor] == 'B' or pseudo_array[self.x_coor-1][self.y_coor] == 'K')):
+                    self.x_coor -= 1
+                    self.last_move = 'w'
+                    array[old_x][old_y] = " "
+                    pseudo_array[old_x][old_y] = " "
+                    array[self.x_coor][self.y_coor] = self.color + \
+                        "A" + Style.RESET_ALL
+                    pseudo_array[self.x_coor][self.y_coor] = "A"
+                elif(self.x_coor < Universal_array[i_temp][j_temp].X_coor and self.y_coor == Universal_array[i_temp][j_temp].Y_coor and (pseudo_array[self.x_coor+1][self.y_coor] == ' ' or pseudo_array[self.x_coor+1][self.y_coor] == 'B' or pseudo_array[self.x_coor+1][self.y_coor] == 'K')):
+                    self.x_coor += 1
+                    self.last_move = 's'
+                    array[old_x][old_y] = " "
+                    pseudo_array[old_x][old_y] = " "
+                    array[self.x_coor][self.y_coor] = self.color + \
+                        "A" + Style.RESET_ALL
+                    pseudo_array[self.x_coor][self.y_coor] = "A"
+                elif(self.x_coor == Universal_array[i_temp][j_temp].X_coor and self.y_coor > Universal_array[i_temp][j_temp].Y_coor and (pseudo_array[self.x_coor][self.y_coor-1] == ' ' or pseudo_array[self.x_coor][self.y_coor-1] == 'B' or pseudo_array[self.x_coor][self.y_coor-1] == 'K')):
+                    self.y_coor -= 1
+                    self.last_move = 'a'
+                    array[old_x][old_y] = " "
+                    pseudo_array[old_x][old_y] = " "
+                    array[self.x_coor][self.y_coor] = self.color + \
+                        "A" + Style.RESET_ALL
+                    pseudo_array[self.x_coor][self.y_coor] = "A"
+                elif(self.x_coor == Universal_array[i_temp][j_temp].X_coor and self.y_coor < Universal_array[i_temp][j_temp].Y_coor and (pseudo_array[self.x_coor][self.y_coor+1] == ' ' or pseudo_array[self.x_coor][self.y_coor+1] == 'B' or pseudo_array[self.x_coor][self.y_coor+1] == 'K')):
+                    self.y_coor += 1
+                    self.last_move = 'd'
+                    array[old_x][old_y] = " "
+                    pseudo_array[old_x][old_y] = " "
+                    array[self.x_coor][self.y_coor] = self.color + \
+                        "A" + Style.RESET_ALL
+                    pseudo_array[self.x_coor][self.y_coor] = "A"
+                elif(self.x_coor > Universal_array[i_temp][j_temp].X_coor and self.y_coor > Universal_array[i_temp][j_temp].Y_coor and (pseudo_array[self.x_coor-1][self.y_coor-1] == ' ' or pseudo_array[self.x_coor-1][self.y_coor-1] == 'B' or pseudo_array[self.x_coor-1][self.y_coor-1] == 'K')):
+                    self.x_coor -= 1
+                    self.y_coor -= 1
+                    self.last_move = '#'
+                    array[old_x][old_y] = " "
+                    pseudo_array[old_x][old_y] = " "
+                    array[self.x_coor][self.y_coor] = self.color + \
+                        "A" + Style.RESET_ALL
+                    pseudo_array[self.x_coor][self.y_coor] = "A"
+                elif(self.x_coor > Universal_array[i_temp][j_temp].X_coor and self.y_coor < Universal_array[i_temp][j_temp].Y_coor and (pseudo_array[self.x_coor-1][self.y_coor+1] == ' ' or pseudo_array[self.x_coor-1][self.y_coor+1] == 'B' or pseudo_array[self.x_coor-1][self.y_coor+1] == 'K')):
+                    self.x_coor -= 1
+                    self.y_coor += 1
+                    self.last_move = '#'
+                    array[old_x][old_y] = " "
+                    pseudo_array[old_x][old_y] = " "
+                    array[self.x_coor][self.y_coor] = self.color + \
+                        "A" + Style.RESET_ALL
+                    pseudo_array[self.x_coor][self.y_coor] = "A"
+                elif(self.x_coor < Universal_array[i_temp][j_temp].X_coor and self.y_coor > Universal_array[i_temp][j_temp].Y_coor and (pseudo_array[self.x_coor+1][self.y_coor-1] == ' ' or pseudo_array[self.x_coor+1][self.y_coor-1] == 'B' or pseudo_array[self.x_coor+1][self.y_coor-1] == 'K')):
+                    self.x_coor += 1
+                    self.y_coor -= 1
+                    self.last_move = '#'
+                    array[old_x][old_y] = " "
+                    pseudo_array[old_x][old_y] = " "
+                    array[self.x_coor][self.y_coor] = self.color + \
+                        "A" + Style.RESET_ALL
+                    pseudo_array[self.x_coor][self.y_coor] = "A"
+                elif(self.x_coor < Universal_array[i_temp][j_temp].X_coor and self.y_coor < Universal_array[i_temp][j_temp].Y_coor and (pseudo_array[self.x_coor+1][self.y_coor+1] == ' ' or pseudo_array[self.x_coor+1][self.y_coor+1] == 'B' or pseudo_array[self.x_coor+1][self.y_coor+1] == 'K')):
+                    self.x_coor += 1
+                    self.y_coor += 1
+                    self.last_move = '#'
+                    array[old_x][old_y] = " "
+                    pseudo_array[old_x][old_y] = " "
+                    array[self.x_coor][self.y_coor] = self.color + \
+                        "A" + Style.RESET_ALL
+                    pseudo_array[self.x_coor][self.y_coor] = "A"
+
+
+                        
+
+    def health_bar(self, array, pseudo_array):
+        health = self.health
+        if self.health <= 0:
+            old_X = self.x_coor
+            old_Y = self.y_coor
+            array[old_X][old_Y] = ' '
+            pseudo_array[old_X][old_Y] = ' '
+            self.x_coor = -1
+            self.y_coor = -1
+            self.attack_power = 0
+
+        else:
+            if self.health >= 0.5*gv.max_health_barbarians:
+                self.color = Back.GREEN
+            elif self.health >= 0.2*gv.max_health_barbarians:
+                self.color = Back.YELLOW
+            elif self.health > 0:
+                self.color = Back.RED
+
+            array[self.x_coor][self.y_coor] = self.color + \
+                "A" + Style.RESET_ALL
+            pseudo_array[self.x_coor][self.y_coor] = self.color + \
+                "A" + Style.RESET_ALL
+
+
+
+
+
+class Balloon(Character):
+    pass
+
