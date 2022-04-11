@@ -37,8 +37,11 @@ class Building:
                 char = 'H'
             elif self.type == 'canon':
                 char = 'C'
+            elif self.type == 'wizard_tower':
+                char = 'Y'
             elif self.type == 'wall':
                 char = 'W'
+            
 
             for i in range(self.X_coor, self.X_coor+self.len):
                 for j in range(self.Y_coor, self.Y_coor+self.width):
@@ -103,24 +106,80 @@ class Canon(Building):
 
     def attack(self, array, pseudo_array, king, barbarians, archers):
         if(((self.X_coor-king.x_coor)**2 + (self.Y_coor - king.y_coor)**2 <= 36) and (king.x_coor != -1 and king.y_coor != -1) and king.health > 0):
-                array[self.X_coor][self.Y_coor] = Back.RED + 'C' + Style.RESET_ALL
+                array[self.X_coor][self.Y_coor] = self.color + Back.RED + 'C' + Style.RESET_ALL
                 king.health -= self.attack_power
                 if(king.health <=0):
                     king.destroy(array, pseudo_array)
         else:
-            for i in barbarians:
-                if(i.x_coor > 0 and i.y_coor > 0 and i.health > 0):
-                    if((self.X_coor-i.x_coor)**2 + (self.Y_coor - i.y_coor)**2 <= 25):
-                        array[self.X_coor][self.Y_coor] = Back.RED + 'C' + Style.RESET_ALL
-                        i.health -= self.attack_power
-                        if i.health <= 0:
-                            i.destroy(array, pseudo_array)
+            troop = []
+            troop.append(barbarians)
+            troop.append(archers)
+            for i in range(len(troop)):
+                for j in troop[i]:
+                    if(((self.X_coor-j.x_coor)**2 + (self.Y_coor - j.y_coor)**2 <= 25) and (j.x_coor != -1 and j.y_coor != -1) and j.health > 0):
+                        array[self.X_coor][self.Y_coor] = self.color + Back.RED + 'C' + Style.RESET_ALL
+                        j.health -= self.attack_power
+                        if(j.health <=0):
+                            j.destroy(array, pseudo_array)
                         break
             
 
-        
 
+class Wizard_tower(Building):
+    def __init__(self, X_coor, Y_coor, array, pseudo_array, wizard_tower_id):
+        self.type = "wizard_tower"
+        self.len = 1
+        self.width = 1
+        self.X_coor = X_coor
+        self.Y_coor = Y_coor
+        self.max_health = gv.max_health_wizard_tower
+        self.health = self.max_health
+        self.color = Fore.GREEN
+        self.wizard_tower_id = wizard_tower_id
+        self.attack_power = gv.wizard_tower_damage
 
+        array[self.X_coor][self.Y_coor] =  self.color + 'Y' + Style.RESET_ALL 
+        pseudo_array[self.X_coor][self.Y_coor] = 'Y' + str(self.wizard_tower_id)
+
+    def attack(self, array, pseudo_array, king, barbarians, archers, balloons):
+        if(((self.X_coor-king.x_coor)**2 + (self.Y_coor - king.y_coor)**2 <= 25) and (king.x_coor != -1 and king.y_coor != -1) and king.health > 0):
+                array[self.X_coor][self.Y_coor] = self.color + Back.RED + 'Y' + Style.RESET_ALL
+                king.health -= self.attack_power
+                if(king.health <=0):
+                    king.destroy(array, pseudo_array)
+        else:
+            troop = []
+            troop.append(barbarians)
+            troop.append(archers)
+            troop.append(balloons)
+            target = []
+            found = False
+            for i in range(len(troop)):
+                for j in troop[i]:
+                    if(((self.X_coor-j.x_coor)**2 + (self.Y_coor - j.y_coor)**2 <= 25) and (j.x_coor != -1 and j.y_coor != -1) and j.health > 0):
+                        target.append(j)
+                        found = True
+                        break
+                if(found):
+                    break
+            # troops in 3*3 area should also be targetted
+            # print(target)
+            if(found):
+                for k in range(len(troop)):
+                    for l in troop[k]:
+                        abs_man_x = abs(l.x_coor - j.x_coor)
+                        abs_man_y = abs(l.y_coor - j.y_coor)
+
+                        if(abs_man_x <= 3/2 and abs_man_y <= 3/2):
+                            target.append(l)
+                
+                for targ in target:
+                    array[self.X_coor][self.Y_coor] = self.color + Back.RED + 'Y' + Style.RESET_ALL
+                    targ.health -= self.attack_power
+                    if(targ.health <=0):
+                        targ.destroy(array, pseudo_array)
+                        
+                    
 class Wall(Building):
     def __init__(self, X_coor, Y_coor, array, pseudo_array, wall_id):
         self.type = "wall"
@@ -139,7 +198,7 @@ class Wall(Building):
 
 
         
-        
+
 
         
         

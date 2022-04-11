@@ -33,6 +33,10 @@ canon_list.append(b.Canon(6, 25, Game_Map.array, Game_Map.pseudo_array, 0))
 Universal_array.append(canon_list)
 canon_list.append(b.Canon(12, 45, Game_Map.array, Game_Map.pseudo_array, 1))
 
+wizard_tower_list = []
+wizard_tower_list.append(b.Wizard_tower(6, 27, Game_Map.array, Game_Map.pseudo_array, 0))
+wizard_tower_list.append(b.Wizard_tower(14, 25, Game_Map.array, Game_Map.pseudo_array, 1))
+
 wall = []
 count = 0
 i = int(gv.m/5)

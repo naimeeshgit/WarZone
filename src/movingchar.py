@@ -2,7 +2,7 @@ import time
 import os
 import src.global_variable as gv
 import src.building as b
-from src.initialise import Game_Map, townhall, list_hut, canon_list, wall, Universal_array, townH
+from src.initialise import Game_Map, townhall, list_hut, canon_list, wall, Universal_array, townH, wizard_tower_list
 import colorama
 from colorama import Fore, Back, Style
 colorama.init(autoreset=True)
@@ -114,6 +114,9 @@ class Character:
                     code = code[1:len(code):1]
                     canon_list[int(code)].damage(
                         self.attack_power, array, pseudo_array)
+                elif code[0] == 'Y':
+                    code = code[1:len(code):1]
+                    wizard_tower_list.damage(self.attack_power, array, pseudo_array)
                 elif code[0] == 'W':
                     code = code[1:len(code):1]
                     code = int(code)
@@ -133,6 +136,9 @@ class Character:
                     code = code[1:len(code):1]
                     canon_list[int(code)].damage(
                         self.attack_power, array, pseudo_array)
+                elif code[0] == 'Y':
+                    code = code[1:len(code):1]
+                    wizard_tower_list.damage(self.attack_power, array, pseudo_array)
                 elif code[0] == 'W':
                     code = code[1:len(code):1]
                     code = int(code)
@@ -152,6 +158,9 @@ class Character:
                     code = code[1:len(code):1]
                     canon_list[int(code)].damage(
                         self.attack_power, array, pseudo_array)
+                elif code[0] == 'Y':
+                    code = code[1:len(code):1]
+                    wizard_tower_list.damage(self.attack_power, array, pseudo_array)
                 elif code[0] == 'W':
                     code = code[1:len(code):1]
                     code = int(code)
@@ -171,13 +180,16 @@ class Character:
                     code = code[1:len(code):1]
                     canon_list[int(code)].damage(
                         self.attack_power, array, pseudo_array)
+                elif code[0] == 'Y':
+                    code = code[1:len(code):1]
+                    wizard_tower_list.damage(self.attack_power, array, pseudo_array)
                 elif code[0] == 'W':
                     code = code[1:len(code):1]
                     code = int(code)
                     wall[code].damage(self.attack_power, array, pseudo_array)
 
     def leviathan(self, array, pseudo_array, Universal_array):
-        for i in range(4):
+        for i in range(5):
             for j in Universal_array[i]:
                 if((self.x_coor - j.X_coor)**2 + (self.y_coor - j.Y_coor)**2 <= 25):
                     j.damage(self.attack_power, array, pseudo_array)
@@ -270,7 +282,7 @@ class barbarians(Character):
             # iterate over Universal_array
             min_distance = 10000
             i_temp, j_temp = 0, 0
-            for i in range(3):
+            for i in range(4):
                 for j in range(len(Universal_array[i])):
                     x_diff = abs(self.x_coor - Universal_array[i][j].X_coor)**2
                     y_diff = abs(self.y_coor - Universal_array[i][j].Y_coor)**2
@@ -375,11 +387,16 @@ class barbarians(Character):
                     code = code[1:len(code):1]
                     canon_list[int(code)].damage(
                         self.attack_power, array, pseudo_array)
+                elif code[0] == 'Y':
+                    code = code[1:len(code):1]
+                    wizard_tower_list[int(code)].damage(
+                        self.attack_power, array, pseudo_array)
                 elif code[0] == 'W':
                     code = code[1:len(code):1]
                     code = int(code)
                     wall[code].damage(self.attack_power,
                                       array, pseudo_array)
+                                      
             elif(pseudo_array[curr_X][curr_Y-1] != ' ' and pseudo_array[curr_X][curr_Y-1] != 'K' and pseudo_array[curr_X][curr_Y-1] != 'B'):
                 code = pseudo_array[curr_X][curr_Y-1]
                 # parse code into letter and number
@@ -392,6 +409,10 @@ class barbarians(Character):
                 elif code[0] == 'C':
                     code = code[1:len(code):1]
                     canon_list[int(code)].damage(
+                        self.attack_power, array, pseudo_array)
+                elif code[0] == 'Y':
+                    code = code[1:len(code):1]
+                    wizard_tower_list[int(code)].damage(
                         self.attack_power, array, pseudo_array)
                 elif code[0] == 'W':
                     code = code[1:len(code):1]
@@ -411,6 +432,10 @@ class barbarians(Character):
                     code = code[1:len(code):1]
                     canon_list[int(code)].damage(
                         self.attack_power, array, pseudo_array)
+                elif code[0] == 'Y':
+                    code = code[1:len(code):1]
+                    wizard_tower_list[int(code)].damage(
+                        self.attack_power, array, pseudo_array)
                 elif code[0] == 'W':
                     code = code[1:len(code):1]
                     code = int(code)
@@ -428,6 +453,10 @@ class barbarians(Character):
                 elif code[0] == 'C':
                     code = code[1:len(code):1]
                     canon_list[int(code)].damage(
+                        self.attack_power, array, pseudo_array)
+                elif code[0] == 'Y':
+                    code = code[1:len(code):1]
+                    wizard_tower_list[int(code)].damage(
                         self.attack_power, array, pseudo_array)
                 elif code[0] == 'W':
                     code = code[1:len(code):1]
@@ -447,6 +476,10 @@ class barbarians(Character):
                     code = code[1:len(code):1]
                     canon_list[int(code)].damage(
                         self.attack_power, array, pseudo_array)
+                elif code[0] == 'Y':
+                    code = code[1:len(code):1]
+                    wizard_tower_list[int(code)].damage(
+                        self.attack_power, array, pseudo_array)
                 elif code[0] == 'W':
                     code = code[1:len(code):1]
                     code = int(code)
@@ -464,6 +497,10 @@ class barbarians(Character):
                 elif code[0] == 'C':
                     code = code[1:len(code):1]
                     canon_list[int(code)].damage(
+                        self.attack_power, array, pseudo_array)
+                elif code[0] == 'Y':
+                    code = code[1:len(code):1]
+                    wizard_tower_list[int(code)].damage(
                         self.attack_power, array, pseudo_array)
                 elif code[0] == 'W':
                     code = code[1:len(code):1]
@@ -483,6 +520,10 @@ class barbarians(Character):
                     code = code[1:len(code):1]
                     canon_list[int(code)].damage(
                         self.attack_power, array, pseudo_array)
+                elif code[0] == 'Y':
+                    code = code[1:len(code):1]
+                    wizard_tower_list[int(code)].damage(
+                        self.attack_power, array, pseudo_array)
                 elif code[0] == 'W':
                     code = code[1:len(code):1]
                     code = int(code)
@@ -500,6 +541,10 @@ class barbarians(Character):
                 elif code[0] == 'C':
                     code = code[1:len(code):1]
                     canon_list[int(code)].damage(
+                        self.attack_power, array, pseudo_array)
+                elif code[0] == 'Y':
+                    code = code[1:len(code):1]
+                    wizard_tower_list[int(code)].damage(
                         self.attack_power, array, pseudo_array)
                 elif code[0] == 'W':
                     code = code[1:len(code):1]
@@ -580,23 +625,24 @@ class Archers(Character):
                     wall[i].damage(self.attack_power, array, pseudo_array)
                     attacked = True
                     break 
-
-            else: 
+            if(attacked == False): 
             # now check if there is no building in range
-                for i in range(3):
+                for i in range(4):
                     for j in Universal_array[i]:
                         # check if its under range
                         dist = ((self.x_coor-j.X_coor)**2 + (self.y_coor-j.Y_coor)**2)**0.5
                         if(dist<=8):
                             j.damage(self.attack_power, array, pseudo_array)
                             attacked = True
+                        break
+                    if(attacked == True):
+                        break
                 
-
             if(attacked == False):
                 # move
                 min_distance = 10000
                 i_temp, j_temp = 0, 0
-                for i in range(3):
+                for i in range(4):
                     for j in range(len(Universal_array[i])):
                         x_diff = abs(self.x_coor - Universal_array[i][j].X_coor)**2
                         y_diff = abs(self.y_coor - Universal_array[i][j].Y_coor)**2
@@ -714,6 +760,45 @@ class Archers(Character):
 
 
 
-class Balloon(Character):
-    pass
+class Balloons(Character):
+    
+    def __init__(self, x_coor, y_coor, array, pseudo_array, balloon_count):
+        self.type = "Balloons"
+        self.x_coor = x_coor
+        self.y_coor = y_coor
+        self.color = Back.GREEN
+        array[self.x_coor][self.y_coor] = self.color + "O" + Style.RESET_ALL
+        pseudo_array[self.x_coor][self.y_coor] = "O"
+        self.health = gv.max_health_balloons
+        self.last_move = " "
+        self.attack_power = gv.attack_power_balloons
+        self.barbarian_id = balloon_count
+        self.movement_speed = 1
 
+    def move(self, array, pseudo_array, Universal_array):
+        pass
+
+    def health_bar(self, array, pseudo_array):
+        health = self.health
+        if self.health <= 0:
+            old_X = self.x_coor
+            old_Y = self.y_coor
+            array[old_X][old_Y] = ' '
+            pseudo_array[old_X][old_Y] = ' '
+            self.x_coor = -1
+            self.y_coor = -1
+            self.attack_power = 0
+
+        else:
+            if self.health >= 0.5*gv.max_health_balloons:
+                self.color = Back.GREEN
+            elif self.health >= 0.2*gv.max_health_ballons:
+                self.color = Back.YELLOW
+            elif self.health > 0:
+                self.color = Back.RED
+
+            array[self.x_coor][self.y_coor] = self.color + \
+                "O" + Style.RESET_ALL
+            pseudo_array[self.x_coor][self.y_coor] = self.color + \
+                "O" + Style.RESET_ALL
+        

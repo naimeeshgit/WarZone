@@ -16,28 +16,81 @@ import time
 
 
 if __name__ == "__main__":
-    # Game_Map = []
-    # for i in range(3):
-    #     Game_Map.append(scenery.GameBoard())
+    # from config import *
 
-    # print(canon_list)
-    # print(wall)
-    # user_char = input("Choose character 1 for Archer Queen , 2 for King:")
-    # if user_char == "1":
-    #     # Archer Queen
-    #     PlayingChar = mc.Archer_Queen(2, 2, Game_Map.array, Game_Map.pseudo_array)
-    # elif user_char == "2":
-    #     # King
-    #     PlayingChar = mc.king(2, 2, Game_Map.array, Game_Map.pseudo_array)
-    # else: 
-    #     PlayingChar = mc.king(2, 2, Game_Map.array, Game_Map.pseudo_array)
+    Game_Map = scenery.GameBoard()
+    Universal_array = []
+    # Game_Map.print_board()
+    townhall = b.Townhall(Game_Map.array,Game_Map.pseudo_array)
+    townH = []
+    townH.append(townhall)
+    Universal_array.append(townH)
+
+    list_hut = []
+    list_hut.append(b.Huts(6, 13, Game_Map.array, Game_Map.pseudo_array, 0))
+    list_hut.append(b.Huts(14, 23, Game_Map.array, Game_Map.pseudo_array, 1))
+    list_hut.append(b.Huts(8, 25, Game_Map.array, Game_Map.pseudo_array, 2))
+    list_hut.append(b.Huts(14, 43, Game_Map.array, Game_Map.pseudo_array, 3))
+    list_hut.append(b.Huts(6, 38, Game_Map.array, Game_Map.pseudo_array, 4))
+    Universal_array.append(list_hut)
+
+    canon_list = []
+    canon_list.append(b.Canon(6, 25, Game_Map.array, Game_Map.pseudo_array, 0))
+    canon_list.append(b.Canon(12, 45, Game_Map.array, Game_Map.pseudo_array, 1))
+    Universal_array.append(canon_list)
+    
+
+    wizard_tower_list = []
+    wizard_tower_list.append(b.Wizard_tower(6, 27, Game_Map.array, Game_Map.pseudo_array, 0))
+    wizard_tower_list.append(b.Wizard_tower(14, 25, Game_Map.array, Game_Map.pseudo_array, 1))
+    Universal_array.append(wizard_tower_list)
+
+
+    wall = []
+    count = 0
+    i = int(gv.m/5)
+    for j in range(int(gv.n/5), int(4*gv.n/5)):
+        wall.append(b.Wall(i, j, Game_Map.array, Game_Map.pseudo_array, count))
+        count += 1
+
+    i = int(4*gv.m/5)
+    for j in range(int(gv.n/5), int(4*gv.n/5)):
+        wall.append(b.Wall(i, j, Game_Map.array, Game_Map.pseudo_array, count))
+        count += 1
+
+    j = int(gv.n/5)
+    for i in range(int(gv.m/5), int(4*gv.m/5)):
+        wall.append(b.Wall(i, j, Game_Map.array, Game_Map.pseudo_array, count))
+        count += 1
+
+    j = int(4*gv.n/5)
+    for i in range(int(gv.m/5), int(4*gv.m/5)):
+        wall.append(b.Wall(i, j, Game_Map.array, Game_Map.pseudo_array, count))
+        count += 1
+
+    Universal_array.append(wall)
+
+
+    Game_Map.print_board()
+
+    # print("x")
+    # print(townhall)
+    # print(list_hut[0].X_coor, list_hut[0].Y_coor)
+    # print(Game_Map.array[6][15])
+    # print(Game_Map.pseudo_array[6][15])
         
     PlayingChar = mc.king(2, 2, Game_Map.array, Game_Map.pseudo_array)
     king = PlayingChar
     barbarians = []
     barbarian_count = 0
+
+
     archers = []
     archer_count = 0
+
+    balloons = []
+    balloon_count = 0
+
     universal_iterator = 0
     replay = []
     timeout = 0.24
@@ -56,7 +109,7 @@ if __name__ == "__main__":
 
        
         
-        # timeout = 0.24
+        timeout = 0.24
 
         while True:
             # Getting input from user
@@ -178,6 +231,15 @@ if __name__ == "__main__":
             elif input_ == "6" and archer_count < 6:
                 archers.append(mc.Archers(2,45, Game_Map.array, Game_Map.pseudo_array, archer_count))
                 archer_count += 1
+            elif input_ == "7" and balloon_count < 3:
+                balloons.append(mc.Balloons(2,3, Game_Map.array, Game_Map.pseudo_array, balloon_count))
+                balloon_count += 1
+            elif input_ == "8" and balloon_count < 3:
+                balloons.append(mc.Balloons(18,3, Game_Map.array, Game_Map.pseudo_array, balloon_count))
+                balloon_count += 1
+            elif input_ == "9" and balloon_count < 3:
+                balloons.append(mc.Balloons(2,50, Game_Map.array, Game_Map.pseudo_array, balloon_count))
+                balloon_count += 1
 
             
 
@@ -258,9 +320,15 @@ if __name__ == "__main__":
             for i in canon_list:
                 if(universal_iterator%3 == 2):
                     i.attack(Game_Map.array, Game_Map.pseudo_array, king, barbarians, archers)
-                if(universal_iterator%3 == 1):
-                    if(i.X_coor >0 and i.X_coor < gv.n and i.Y_coor > 0 and i.Y_coor < gv.m):
-                        Game_Map.array[i.X_coor][i.Y_coor] = Fore.GREEN + 'C' + Style.RESET_ALL
+                if(universal_iterator%3 == 1 or universal_iterator%3 == 0):
+                    if(i.health > 0):
+                        Game_Map.array[i.X_coor][i.Y_coor] = i.color + 'C' + Style.RESET_ALL
+            for i in wizard_tower_list:
+                if(universal_iterator%3 == 2):
+                    i.attack(Game_Map.array, Game_Map.pseudo_array, king, barbarians, archers, balloons)
+                if(universal_iterator%3 == 1 or universal_iterator%3 == 0):
+                    if(i.health>0):
+                        Game_Map.array[i.X_coor][i.Y_coor] = i.color + 'Y' + Style.RESET_ALL
             
         
 
