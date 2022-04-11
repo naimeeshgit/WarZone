@@ -116,7 +116,7 @@ class Character:
                         self.attack_power, array, pseudo_array)
                 elif code[0] == 'Y':
                     code = code[1:len(code):1]
-                    wizard_tower_list.damage(self.attack_power, array, pseudo_array)
+                    wizard_tower_list[int(code)].damage(self.attack_power, array, pseudo_array)
                 elif code[0] == 'W':
                     code = code[1:len(code):1]
                     code = int(code)
@@ -138,7 +138,7 @@ class Character:
                         self.attack_power, array, pseudo_array)
                 elif code[0] == 'Y':
                     code = code[1:len(code):1]
-                    wizard_tower_list.damage(self.attack_power, array, pseudo_array)
+                    wizard_tower_list[int(code)].damage(self.attack_power, array, pseudo_array)
                 elif code[0] == 'W':
                     code = code[1:len(code):1]
                     code = int(code)
@@ -160,7 +160,7 @@ class Character:
                         self.attack_power, array, pseudo_array)
                 elif code[0] == 'Y':
                     code = code[1:len(code):1]
-                    wizard_tower_list.damage(self.attack_power, array, pseudo_array)
+                    wizard_tower_list[int(code)].damage(self.attack_power, array, pseudo_array)
                 elif code[0] == 'W':
                     code = code[1:len(code):1]
                     code = int(code)
@@ -182,7 +182,7 @@ class Character:
                         self.attack_power, array, pseudo_array)
                 elif code[0] == 'Y':
                     code = code[1:len(code):1]
-                    wizard_tower_list.damage(self.attack_power, array, pseudo_array)
+                    wizard_tower_list[int(code)].damage(self.attack_power, array, pseudo_array)
                 elif code[0] == 'W':
                     code = code[1:len(code):1]
                     code = int(code)

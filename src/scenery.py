@@ -41,7 +41,7 @@ class GameBoard:
                 print(self.pseudo_array[i][j], end="")
             print()
 
-    def game_lost(self, king, barbarians, barbarian_count, archers, archer_count):
+    def game_lost(self, king, barbarians, barbarian_count, archers, archer_count, balloons, ballon_count):
         king_death = -1
         barbarians_death = -1
         if king.health <= 0:
@@ -54,14 +54,20 @@ class GameBoard:
                 else:
                     barbarians_death = 0
         for i in archers:
-            if archer_count == 6:
+            if archer_count == 5:
                 if i.health > 0:
                     break
                 else:
                     archers_death = 0
+        for i in balloons:
+            if ballon_count == 2:
+                if i.health > 0:
+                    break
+                else:
+                    balloons_death = 0
 
         
-        if(king_death == 0 and barbarians_death == 0 and archers_death == 0):
+        if(king_death == 0 and barbarians_death == 0 and archers_death == 0 and balloons_death == 0):
             return True
         else:
             return False
@@ -70,7 +76,7 @@ class GameBoard:
     def game_won(self, Universal_array):
         
         all_destroyed = False
-        for i in range(3):
+        for i in range(4):
             for j in Universal_array[i]:
                 if(j.health > 0):
                     return False
@@ -83,8 +89,8 @@ class GameBoard:
     def game_points(self, Universal_array):
         
         game_points = 0
-        multiplier = [20,10,5,1]
-        for i in range(4):
+        multiplier = [20,10,5,7,1]
+        for i in range(5):
             for j in Universal_array[i]:
                 if j.health <= 0:
                     game_points += multiplier[i]

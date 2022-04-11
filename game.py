@@ -18,98 +18,101 @@ import time
 if __name__ == "__main__":
     # from config import *
 
-    Game_Map = scenery.GameBoard()
-    Universal_array = []
-    # Game_Map.print_board()
-    townhall = b.Townhall(Game_Map.array,Game_Map.pseudo_array)
-    townH = []
-    townH.append(townhall)
-    Universal_array.append(townH)
-
-    list_hut = []
-    list_hut.append(b.Huts(6, 13, Game_Map.array, Game_Map.pseudo_array, 0))
-    list_hut.append(b.Huts(14, 23, Game_Map.array, Game_Map.pseudo_array, 1))
-    list_hut.append(b.Huts(8, 25, Game_Map.array, Game_Map.pseudo_array, 2))
-    list_hut.append(b.Huts(14, 43, Game_Map.array, Game_Map.pseudo_array, 3))
-    list_hut.append(b.Huts(6, 38, Game_Map.array, Game_Map.pseudo_array, 4))
-    Universal_array.append(list_hut)
-
-    canon_list = []
-    canon_list.append(b.Canon(6, 25, Game_Map.array, Game_Map.pseudo_array, 0))
-    canon_list.append(b.Canon(12, 45, Game_Map.array, Game_Map.pseudo_array, 1))
-    Universal_array.append(canon_list)
     
+    for level in range(3):
 
-    wizard_tower_list = []
-    wizard_tower_list.append(b.Wizard_tower(6, 27, Game_Map.array, Game_Map.pseudo_array, 0))
-    wizard_tower_list.append(b.Wizard_tower(14, 25, Game_Map.array, Game_Map.pseudo_array, 1))
-    Universal_array.append(wizard_tower_list)
+        Game_Map = scenery.GameBoard()
+        Universal_array = []
+        # Game_Map.print_board()
+        townhall = b.Townhall(Game_Map.array,Game_Map.pseudo_array)
+        townH = []
+        townH.append(townhall)
+        Universal_array.append(townH)
 
+        list_hut = []
+        list_hut.append(b.Huts(6, 13, Game_Map.array, Game_Map.pseudo_array, 0))
+        list_hut.append(b.Huts(14, 23, Game_Map.array, Game_Map.pseudo_array, 1))
+        list_hut.append(b.Huts(8, 25, Game_Map.array, Game_Map.pseudo_array, 2))
+        list_hut.append(b.Huts(14, 43, Game_Map.array, Game_Map.pseudo_array, 3))
+        list_hut.append(b.Huts(6, 38, Game_Map.array, Game_Map.pseudo_array, 4))
+        Universal_array.append(list_hut)
 
-    wall = []
-    count = 0
-    i = int(gv.m/5)
-    for j in range(int(gv.n/5), int(4*gv.n/5)):
-        wall.append(b.Wall(i, j, Game_Map.array, Game_Map.pseudo_array, count))
-        count += 1
+        canon_list = []
+        canon_list.append(b.Canon(6, 25, Game_Map.array, Game_Map.pseudo_array, 0))
+        canon_list.append(b.Canon(12, 45, Game_Map.array, Game_Map.pseudo_array, 1))
 
-    i = int(4*gv.m/5)
-    for j in range(int(gv.n/5), int(4*gv.n/5)):
-        wall.append(b.Wall(i, j, Game_Map.array, Game_Map.pseudo_array, count))
-        count += 1
-
-    j = int(gv.n/5)
-    for i in range(int(gv.m/5), int(4*gv.m/5)):
-        wall.append(b.Wall(i, j, Game_Map.array, Game_Map.pseudo_array, count))
-        count += 1
-
-    j = int(4*gv.n/5)
-    for i in range(int(gv.m/5), int(4*gv.m/5)):
-        wall.append(b.Wall(i, j, Game_Map.array, Game_Map.pseudo_array, count))
-        count += 1
-
-    Universal_array.append(wall)
+        if(level == 1):
+            canon_list.append(b.Canon(14, 44, Game_Map.array, Game_Map.pseudo_array, 2))
+        if(level == 2):
+            canon_list.append(b.Canon(14, 44, Game_Map.array, Game_Map.pseudo_array, 2))
+            canon_list.append(b.Canon(15, 44, Game_Map.array, Game_Map.pseudo_array, 3))
+        Universal_array.append(canon_list)
 
 
-    Game_Map.print_board()
-
-    # print("x")
-    # print(townhall)
-    # print(list_hut[0].X_coor, list_hut[0].Y_coor)
-    # print(Game_Map.array[6][15])
-    # print(Game_Map.pseudo_array[6][15])
         
-    PlayingChar = mc.king(2, 2, Game_Map.array, Game_Map.pseudo_array)
-    king = PlayingChar
-    barbarians = []
-    barbarian_count = 0
+
+        wizard_tower_list = []
+        wizard_tower_list.append(b.Wizard_tower(6, 27, Game_Map.array, Game_Map.pseudo_array, 0))
+        wizard_tower_list.append(b.Wizard_tower(14, 25, Game_Map.array, Game_Map.pseudo_array, 1))
+
+        if(level == 1):
+            wizard_tower_list.append(b.Wizard_tower(7, 14, Game_Map.array, Game_Map.pseudo_array, 2))
+        if(level == 2):
+            wizard_tower_list.append(b.Wizard_tower(7, 14, Game_Map.array, Game_Map.pseudo_array, 2))
+            wizard_tower_list.append(b.Wizard_tower(13, 34, Game_Map.array, Game_Map.pseudo_array, 3))
+        Universal_array.append(wizard_tower_list)
 
 
-    archers = []
-    archer_count = 0
+        wall = []
+        count = 0
+        i = int(gv.m/5)
+        for j in range(int(gv.n/5), int(4*gv.n/5)):
+            wall.append(b.Wall(i, j, Game_Map.array, Game_Map.pseudo_array, count))
+            count += 1
 
-    balloons = []
-    balloon_count = 0
+        i = int(4*gv.m/5)
+        for j in range(int(gv.n/5), int(4*gv.n/5)):
+            wall.append(b.Wall(i, j, Game_Map.array, Game_Map.pseudo_array, count))
+            count += 1
 
-    universal_iterator = 0
-    replay = []
-    timeout = 0.24
+        j = int(gv.n/5)
+        for i in range(int(gv.m/5), int(4*gv.m/5)):
+            wall.append(b.Wall(i, j, Game_Map.array, Game_Map.pseudo_array, count))
+            count += 1
 
-    for level in range(2,3):
+        j = int(4*gv.n/5)
+        for i in range(int(gv.m/5), int(4*gv.m/5)):
+            wall.append(b.Wall(i, j, Game_Map.array, Game_Map.pseudo_array, count))
+            count += 1
 
-        # if(level == 1):
-        #     # clear board
-        #     # re run initialise.py
-        #     Level_board(1)
+        Universal_array.append(wall)
 
-        # elif(level == 2):
-        #     # clear board
-        #     # re run initialise.py
-        #     Level_board(2)
 
-       
-        
+        Game_Map.print_board()
+
+        # print("x")
+        # print(townhall)
+        # print(list_hut[0].X_coor, list_hut[0].Y_coor)
+        # print(Game_Map.array[6][15])
+        # print(Game_Map.pseudo_array[6][15])
+            
+        PlayingChar = mc.king(2, 2, Game_Map.array, Game_Map.pseudo_array)
+        king = PlayingChar
+        barbarians = []
+        barbarian_count = 0
+
+
+        archers = []
+        archer_count = 0
+
+        balloons = []
+        balloon_count = 0
+
+        universal_iterator = 0
+        replay = []
         timeout = 0.24
+
+        quit_game_bool = False
 
         while True:
             # Getting input from user
@@ -176,7 +179,7 @@ if __name__ == "__main__":
 
 
             # check game_ending:
-            game_lost = Game_Map.game_lost(king, barbarians,barbarian_count, archers, archer_count)
+            game_lost = Game_Map.game_lost(king, barbarians,barbarian_count, archers, archer_count, balloons, balloon_count)
             game_won = Game_Map.game_won(Universal_array)
             game_points = Game_Map.game_points(Universal_array)
 
@@ -245,6 +248,7 @@ if __name__ == "__main__":
 
             # quit game
             elif input_ == "q":
+                quit_game_bool = True
                 input_file = input("Save Game as: ")
                 with open ("replays/" + input_file + ".json" ,'w')as outfile:
                     json.dump(replay,outfile)
@@ -334,6 +338,10 @@ if __name__ == "__main__":
 
         if gv.Lost == True:
            break
+
+        if quit_game_bool == True:
+            break
+        
         
     
     
