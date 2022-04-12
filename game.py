@@ -17,6 +17,7 @@ import time
 
 if __name__ == "__main__":
     # from config import *
+    os.system("clear")
 
     
     for level in range(3):
@@ -95,9 +96,14 @@ if __name__ == "__main__":
         # print(list_hut[0].X_coor, list_hut[0].Y_coor)
         # print(Game_Map.array[6][15])
         # print(Game_Map.pseudo_array[6][15])
+
+        player_char = input("Enter 1 for Queen or any other key for king: ")
+
+        if(player_char == "1"):
+            king = mc.Archer_Queen(2,2,Game_Map.array,Game_Map.pseudo_array)
+        else:
+            king = mc.king(2,2,Game_Map.array,Game_Map.pseudo_array)
             
-        PlayingChar = mc.king(2, 2, Game_Map.array, Game_Map.pseudo_array)
-        king = PlayingChar
         barbarians = []
         barbarian_count = 0
 
@@ -113,7 +119,7 @@ if __name__ == "__main__":
         timeout = 0.24
 
         quit_game_bool = False
-
+        
         while True:
             # Getting input from user
             input_time = time.time()
@@ -127,6 +133,13 @@ if __name__ == "__main__":
             if king.health>0:
                 king.health_bar(Game_Map.array, Game_Map.pseudo_array)
                 print(king.health)
+            
+            print(king.type)
+
+            # for i in canon_list:
+            #     i.health_bar()
+            # for i in wizard_tower_list:
+            #     i.health_bar()
 
             
             # Nuke
@@ -162,6 +175,9 @@ if __name__ == "__main__":
                 for i in archers:
                     if i.health > 0:
                         i.attack_power = gv.attack_power_archers
+                for i in balloons:
+                    if i.health > 0:
+                        i.attack_power = gv.attack_power_balloons
                 timeout = 0.24
                 
 
@@ -174,6 +190,11 @@ if __name__ == "__main__":
             
             for i in archers:
                 i.health_bar(Game_Map.array, Game_Map.pseudo_array)
+            
+            for i in balloons:
+                i.health_bar(Game_Map.array, Game_Map.pseudo_array)
+
+            
 
         
 
@@ -268,6 +289,10 @@ if __name__ == "__main__":
                     i.health += 0.5*i.health 
                     if i.health > gv.max_health_archers:
                         i.health = gv.max_health_archers
+                for i in balloons:
+                    i.health += 0.5*i.health 
+                    if i.health > gv.max_health_balloons:
+                        i.health = gv.max_health_balloons
             elif input_ == "r":
                 gv.Rage_spell = True
                 gv.Rage_step = 0
@@ -277,6 +302,9 @@ if __name__ == "__main__":
                     if i.health > 0:
                         i.attack_power = int(1.5*i.attack_power)
                 for i in archers:
+                    if i.health > 0:
+                        i.attack_power = int(1.5*i.attack_power)
+                for i in balloons:
                     if i.health > 0:
                         i.attack_power = int(1.5*i.attack_power)
                 timeout /= 2
@@ -300,9 +328,19 @@ if __name__ == "__main__":
                 elif input_ == "-":
                     king.damage()
                 elif input_ == " ":
-                    king.attack(Game_Map.array, Game_Map.pseudo_array)
+                    king.attack(Game_Map.array, Game_Map.pseudo_array, Universal_array)
                 elif input_ == "l":
-                    king.leviathan(Game_Map.array, Game_Map.pseudo_array, Universal_array)
+                    if king.type == "king":
+                        king.leviathan(Game_Map.array, Game_Map.pseudo_array, Universal_array)
+                    elif king.type == "Archer_Queen":
+                        print("attack initiated")
+                        start = time.time()
+                        temp = 0
+                        while temp < 1:
+                            end = time.time()
+                            temp = end - start      
+                        king.leviathan(Game_Map.array, Game_Map.pseudo_array, Universal_array)
+                        print("damage done")
                     
 
 
@@ -320,6 +358,13 @@ if __name__ == "__main__":
                 if(i.health<=0):
                     i.health_bar(Game_Map.array, Game_Map.pseudo_array)
 
+            # Balloon Movement and attack
+            for i in balloons:
+                i.move(Game_Map.array, Game_Map.pseudo_array, Universal_array)
+                if(i.health<=0):
+                    i.health_bar(Game_Map.array, Game_Map.pseudo_array)
+            
+
             # Canon attack
             for i in canon_list:
                 if(universal_iterator%3 == 2):
@@ -327,13 +372,17 @@ if __name__ == "__main__":
                 if(universal_iterator%3 == 1 or universal_iterator%3 == 0):
                     if(i.health > 0):
                         Game_Map.array[i.X_coor][i.Y_coor] = i.color + 'C' + Style.RESET_ALL
+                
             for i in wizard_tower_list:
                 if(universal_iterator%3 == 2):
                     i.attack(Game_Map.array, Game_Map.pseudo_array, king, barbarians, archers, balloons)
                 if(universal_iterator%3 == 1 or universal_iterator%3 == 0):
                     if(i.health>0):
                         Game_Map.array[i.X_coor][i.Y_coor] = i.color + 'Y' + Style.RESET_ALL
+                
             
+
+           
         
 
         if gv.Lost == True:
@@ -341,7 +390,7 @@ if __name__ == "__main__":
 
         if quit_game_bool == True:
             break
-        
+
         
     
     

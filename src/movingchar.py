@@ -17,53 +17,53 @@ class Character:
         old_x = self.x_coor
         old_y = self.y_coor
 
-        if self.type == "king":
+        if self.type == "king" or self.type == "Archer_Queen":
             if direction == "w":
                 if(self.x_coor > 0):
                     if(array[self.x_coor-1][self.y_coor] != " "):
-                        array[self.x_coor][self.y_coor] = "K"
+                        array[self.x_coor][self.y_coor] = self.char
                     else:
                         self.x_coor -= 1
                         array[old_x][old_y] = " "
                         pseudo_array[old_x][old_y] = " "
-                        array[self.x_coor][self.y_coor] = "K"
-                        pseudo_array[self.x_coor][self.y_coor] = "K"
+                        array[self.x_coor][self.y_coor] = self.char
+                        pseudo_array[self.x_coor][self.y_coor] = self.char
 
                 self.last_move = "w"
             elif direction == "s":
                 if(self.x_coor < gv.m-1):
                     if(array[self.x_coor+1][self.y_coor] != " "):
-                        array[self.x_coor][self.y_coor] = "K"
+                        array[self.x_coor][self.y_coor] = self.char
                     else:
                         self.x_coor += 1
                         array[old_x][old_y] = " "
                         pseudo_array[old_x][old_y] = " "
-                        array[self.x_coor][self.y_coor] = "K"
-                        pseudo_array[self.x_coor][self.y_coor] = "K"
+                        array[self.x_coor][self.y_coor] = self.char
+                        pseudo_array[self.x_coor][self.y_coor] = self.char
 
                 self.last_move = "s"
             elif direction == "a":
                 if(self.y_coor > 0):
                     if(array[self.x_coor][self.y_coor-1] != " "):
-                        array[self.x_coor][self.y_coor] = "K"
+                        array[self.x_coor][self.y_coor] = self.char
                     else:
                         self.y_coor -= 1
                         array[old_x][old_y] = " "
                         pseudo_array[old_x][old_y] = " "
-                        array[self.x_coor][self.y_coor] = "K"
-                        pseudo_array[self.x_coor][self.y_coor] = "K"
+                        array[self.x_coor][self.y_coor] = self.char
+                        pseudo_array[self.x_coor][self.y_coor] = self.char
 
                 self.last_move = "a"
             elif direction == "d":
                 if(self.y_coor < gv.n-1):
                     if(array[self.x_coor][self.y_coor+1] != " "):
-                        array[self.x_coor][self.y_coor] = "K"
+                        array[self.x_coor][self.y_coor] = self.char
                     else:
                         self.y_coor += 1
                         array[old_x][old_y] = " "
                         pseudo_array[old_x][old_y] = " "
-                        array[self.x_coor][self.y_coor] = "K"
-                        pseudo_array[self.x_coor][self.y_coor] = "K"
+                        array[self.x_coor][self.y_coor] = self.char
+                        pseudo_array[self.x_coor][self.y_coor] = self.char
 
                 self.last_move = "d"
 
@@ -95,7 +95,7 @@ class Character:
     def damage(self):
         self.health -= gv.canon_damage
 
-    def attack(self, array, pseudo_array):
+    def attack(self, array, pseudo_array, Universal_array):
         # print(self.x_coor, self.y_coor)
         curr_X = self.x_coor
         curr_Y = self.y_coor
@@ -198,6 +198,7 @@ class Character:
 class king(Character):
     def __init__(self, x_coor, y_coor, array, pseudo_array):
         self.type = "king"
+        self.char = "K"
         self.x_coor = x_coor
         self.y_coor = y_coor
         array[self.x_coor][self.y_coor] = "K"
@@ -211,6 +212,7 @@ class king(Character):
 class Archer_Queen(Character):
     def __init__(self, x_coor, y_coor, array, pseudo_array):
         self.type = "Archer_Queen"
+        self.char = "A"
         self.x_coor = x_coor
         self.y_coor = y_coor
         array[self.x_coor][self.y_coor] = "A"
@@ -219,7 +221,102 @@ class Archer_Queen(Character):
         self.last_move = " "
         self.attack_power = gv.attack_power_archer_queen
         self.movement_speed = 1
-        # self.color = Back.BLUE
+        
+    def attack(self, array, pseudo_array, Universal_array):
+        curr_X = self.x_coor
+        curr_Y = self.y_coor
+        if self.last_move == "w":
+            # queen facing north
+            # centre of volley attack = (curr_x - 8, curr_y)
+            for i in range(5):
+                for j in Universal_array[i]:
+                    man_abs_x = abs(self.x_coor - 8 - j.X_coor)
+                    man_abs_y = abs(self.y_coor - j.Y_coor)
+
+                    if(man_abs_x <= 5/2 and man_abs_y <= 5/2):
+                        j.damage(self.attack_power, array, pseudo_array)
+
+        if self.last_move == "s":
+            # queen facing south
+            # centre of volley attack = (curr_x + 8, curr_y)
+            for i in range(5):
+                for j in Universal_array[i]:
+                    man_abs_x = abs(self.x_coor + 8 - j.X_coor)
+                    man_abs_y = abs(self.y_coor - j.Y_coor)
+
+                    if(man_abs_x <= 5/2 and man_abs_y <= 5/2):
+                        j.damage(self.attack_power, array, pseudo_array)
+        
+        
+        if self.last_move == "a":
+            # queen facing West
+            # centre of volley attack = (curr_x, curr_y - 8)
+            for i in range(5):
+                for j in Universal_array[i]:
+                    man_abs_x = abs(self.x_coor - j.X_coor)
+                    man_abs_y = abs(self.y_coor -8- j.Y_coor)
+
+                    if(man_abs_x <= 5/2 and man_abs_y <= 5/2):
+                        j.damage(self.attack_power, array, pseudo_array)
+        
+        if self.last_move == "d":
+            # queen facing north
+            # centre of volley attack = (curr_x, curr_y + 8)
+            for i in range(5):
+                for j in Universal_array[i]:
+                    man_abs_x = abs(self.x_coor - j.X_coor)
+                    man_abs_y = abs(self.y_coor - j.Y_coor + 8)
+
+                    if(man_abs_x <= 5/2 and man_abs_y <= 5/2):
+                        j.damage(self.attack_power, array, pseudo_array)
+
+    
+    def leviathan(self, array, pseudo_array, Universal_array):
+        if self.last_move == "w":
+            # queen facing north
+            # centre of volley attack = (curr_x - 8, curr_y)
+            for i in range(5):
+                for j in Universal_array[i]:
+                    man_abs_x = abs(self.x_coor - 16 - j.X_coor)
+                    man_abs_y = abs(self.y_coor - j.Y_coor)
+
+                    if(man_abs_x <= 9/2 and man_abs_y <= 9/2):
+                        j.damage(self.attack_power, array, pseudo_array)
+
+        if self.last_move == "s":
+            # queen facing south
+            # centre of volley attack = (curr_x + 8, curr_y)
+            for i in range(5):
+                for j in Universal_array[i]:
+                    man_abs_x = abs(self.x_coor + 16 - j.X_coor)
+                    man_abs_y = abs(self.y_coor - j.Y_coor)
+
+                    if(man_abs_x <= 9/2 and man_abs_y <= 9/2):
+                        j.damage(self.attack_power, array, pseudo_array)
+        
+        
+        if self.last_move == "a":
+            # queen facing West
+            # centre of volley attack = (curr_x, curr_y - 8)
+            for i in range(5):
+                for j in Universal_array[i]:
+                    man_abs_x = abs(self.x_coor - j.X_coor)
+                    man_abs_y = abs(self.y_coor - 16 - j.Y_coor)
+
+                    if(man_abs_x <= 9/2 and man_abs_y <= 9/2):
+                        j.damage(self.attack_power, array, pseudo_array)
+        
+        if self.last_move == "d":
+            # queen facing north
+            # centre of volley attack = (curr_x, curr_y + 8)
+            for i in range(5):
+                for j in Universal_array[i]:
+                    man_abs_x = abs(self.x_coor - j.X_coor)
+                    man_abs_y = abs(self.y_coor - j.Y_coor + 16)
+
+                    if(man_abs_x <= 9/2 and man_abs_y <= 9/2):
+                        j.damage(self.attack_power, array, pseudo_array)
+
 
 
 class Nuke(Character):
@@ -268,7 +365,7 @@ class barbarians(Character):
         self.health = gv.max_health_barbarians
         self.last_move = " "
         self.attack_power = gv.attack_power_barbarians
-        self.barbarian_id = barbarian_count
+        self.id = barbarian_count
         self.movement_speed = 1
 
     def bar_move(self, array, pseudo_array):
@@ -576,8 +673,7 @@ class barbarians(Character):
 
             array[self.x_coor][self.y_coor] = self.color + \
                 "B" + Style.RESET_ALL
-            pseudo_array[self.x_coor][self.y_coor] = self.color + \
-                "B" + Style.RESET_ALL
+            pseudo_array[self.x_coor][self.y_coor] = "B"
 
 
 class Archers(Character):
@@ -591,7 +687,7 @@ class Archers(Character):
         self.health = gv.max_health_archers
         self.last_move = " "
         self.attack_power = gv.attack_power_archers
-        self.barbarian_id = archer_count
+        self.id = archer_count
         self.movement_speed = 1
 
     def move(self, array, pseudo_array, Universal_array):
@@ -753,8 +849,7 @@ class Archers(Character):
 
             array[self.x_coor][self.y_coor] = self.color + \
                 "A" + Style.RESET_ALL
-            pseudo_array[self.x_coor][self.y_coor] = self.color + \
-                "A" + Style.RESET_ALL
+            pseudo_array[self.x_coor][self.y_coor] = "A"
 
 
 
@@ -772,11 +867,179 @@ class Balloons(Character):
         self.health = gv.max_health_balloons
         self.last_move = " "
         self.attack_power = gv.attack_power_balloons
-        self.barbarian_id = balloon_count
+        self.id = balloon_count
         self.movement_speed = 1
 
     def move(self, array, pseudo_array, Universal_array):
-        pass
+        old_X = self.x_coor
+        old_Y = self.y_coor
+        if self.health > 0:
+            defbuil_list = []
+            defbuil_list.append(canon_list)
+            defbuil_list.append(wizard_tower_list)
+            defbuil_present = False
+
+            for i in range(len(defbuil_list)):
+                for j in defbuil_list[i]:
+                    if(j.health>0):
+                        defbuil_present = True
+                        break
+                if(defbuil_present):
+                    break
+            
+            attacked = False
+            if(defbuil_present):
+                for i in range(len(defbuil_list)):
+                    for j in defbuil_list[i]:
+                        dist = ((self.x_coor - j.X_coor)**2 + (self.y_coor - j.Y_coor)**2)**0.5
+                        if dist <= 1.5:
+                            j.damage(self.attack_power, array, pseudo_array)
+                            attacked = True
+                            break
+                    if(attacked == True):
+                        break
+                
+                if(attacked == False):
+                    # find nearest defensive building
+                    min_dist = 10000
+                    for i in range(len(defbuil_list)):
+                        for j in defbuil_list[i]:
+                            dist = ((self.x_coor - j.X_coor)**2 + (self.y_coor - j.Y_coor)**2)**0.5
+                            if dist < min_dist:
+                                min_dist = dist
+                                obj = j
+                    
+                    # j is at min euclidean distance
+                    # move towards it
+                    if(self.x_coor == obj.X_coor):
+                        if(self.y_coor > obj.Y_coor):
+                            self.y_coor -= 1
+                            self.last_move = 'a'
+                            
+                        else:
+                            self.y_coor += 1
+                            self.last_move = 'd'
+                            
+
+                    elif(self.y_coor == obj.Y_coor):
+                        if(self.x_coor > obj.X_coor):
+                            self.x_coor -= 1
+                            self.last_move = 'w'
+                            
+                        else:
+                            self.x_coor += 1
+                            self.last_move = 's'
+                            
+                    
+                    elif(self.x_coor > obj.X_coor):
+                        if(self.y_coor > obj.Y_coor):
+                            self.x_coor -= 1
+                            self.y_coor -= 1
+                            self.last_move = '#'
+                            
+                        else:
+                            self.x_coor -= 1
+                            self.y_coor += 1
+                            self.last_move = '#'
+                            
+
+                    
+                    elif(self.x_coor < obj.X_coor):
+                        if(self.y_coor > obj.Y_coor):
+                            self.x_coor += 1
+                            self.y_coor -= 1
+                            self.last_move = '#'
+                            
+
+                            
+                        else:
+                            self.x_coor += 1
+                            self.y_coor += 1
+                            self.last_move = '#'
+                            
+                    
+                    # make changes accordingly
+                    if(pseudo_array[old_X][old_Y] == 'O'):
+                        array[old_X][old_Y] = " "
+                        pseudo_array[old_X][old_Y] = " "
+                    if(pseudo_array[self.x_coor][self.y_coor] == ' '):
+                        array[self.x_coor][self.y_coor] = self.color + \
+                            "O" + Style.RESET_ALL
+                        pseudo_array[self.x_coor][self.y_coor] = "O"
+
+                        
+            else:
+                for i in range(2):
+                    for j in Universal_array[i]:
+                        dist = ((self.x_coor - j.X_coor)**2 + (self.y_coor - j.Y_coor)**2)**0.5
+                        if dist <= 1.5:
+                            j.damage(self.attack_power, array, pseudo_array)
+                            attacked = True
+                            break
+                    if(attacked == True):
+                        break
+                if(attacked == False):
+                    # find nearest building
+                    min_dist = 10000
+                    for i in range(len(Universal_array)):
+                        for j in Universal_array[i]:
+                            dist = ((self.x_coor - j.X_coor)**2 + (self.y_coor - j.Y_coor)**2)**0.5
+                            if dist < min_dist:
+                                min_dist = dist
+                                obj = j
+                    
+                    # j is at min euclidean distance
+                    # move towards it
+                    if(self.x_coor == obj.X_coor):
+                        if(self.y_coor > obj.Y_coor):
+                            self.y_coor -= 1
+                            self.last_move = 'a'
+                            
+
+                        else:
+                            self.y_coor += 1
+                            self.last_move = 'd'
+                            
+                            
+                    elif(self.y_coor == obj.Y_coor):
+                        if(self.x_coor > obj.X_coor):
+                            self.x_coor -= 1
+                            self.last_move = 'w'
+                            
+                        else:
+                            self.x_coor += 1
+                            self.last_move = 's'
+                            
+                    elif(self.x_coor > obj.X_coor):
+                        if(self.y_coor > obj.Y_coor):
+                            self.x_coor -= 1
+                            self.y_coor -= 1
+                            self.last_move = '#'
+                            
+                        else:
+                            self.x_coor -= 1
+                            self.y_coor += 1
+                            self.last_move = '#'
+                            
+                    elif(self.x_coor < obj.X_coor):
+                        if(self.y_coor > obj.Y_coor):
+                            self.x_coor += 1
+                            self.y_coor -= 1
+                            self.last_move = '#'
+                            
+                        else:
+                            self.x_coor += 1
+                            self.y_coor += 1
+                            self.last_move = '#'
+                    
+                    # make changes accordingly
+                    if(pseudo_array[old_X][old_Y] == 'O'):
+                        array[old_X][old_Y] = " "
+                        pseudo_array[old_X][old_Y] = " "
+                    if(pseudo_array[self.x_coor][self.y_coor] == ' '):
+                        array[self.x_coor][self.y_coor] = self.color + "O" + Style.RESET_ALL
+                        pseudo_array[self.x_coor][self.y_coor] = "O"
+
 
     def health_bar(self, array, pseudo_array):
         health = self.health
@@ -792,13 +1055,13 @@ class Balloons(Character):
         else:
             if self.health >= 0.5*gv.max_health_balloons:
                 self.color = Back.GREEN
-            elif self.health >= 0.2*gv.max_health_ballons:
+            elif self.health >= 0.2*gv.max_health_balloons:
                 self.color = Back.YELLOW
             elif self.health > 0:
                 self.color = Back.RED
-
-            array[self.x_coor][self.y_coor] = self.color + \
-                "O" + Style.RESET_ALL
-            pseudo_array[self.x_coor][self.y_coor] = self.color + \
-                "O" + Style.RESET_ALL
+            
+            if(pseudo_array[self.x_coor][self.y_coor] == ' '):
+                array[self.x_coor][self.y_coor] = self.color + \
+                    "O" + Style.RESET_ALL
+                pseudo_array[self.x_coor][self.y_coor] = "O"
         

@@ -47,6 +47,9 @@ class Building:
                 for j in range(self.Y_coor, self.Y_coor+self.width):
                     array[i][j] = self.color + char + Style.RESET_ALL
         
+    def health_bar(self):
+        print(self.health)
+        
     
         
 class Townhall(Building):
