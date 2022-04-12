@@ -2,7 +2,6 @@ import time
 import os
 import src.global_variable as gv
 import src.building as b
-from src.initialise import Game_Map, townhall, list_hut, canon_list, wall, Universal_array, townH, wizard_tower_list
 import colorama
 from colorama import Fore, Back, Style
 colorama.init(autoreset=True)
@@ -105,88 +104,92 @@ class Character:
                 code = pseudo_array[curr_X-1][curr_Y]
                 # parse code into letter and number
                 if code[0] == 'T':
-                    townhall.damage(self.attack_power, array, pseudo_array)
+                    Universal_array[0][0].damage(self.attack_power, array, pseudo_array)
                 elif code[0] == 'H':
                     code = code[1:len(code):1]
-                    list_hut[int(code)].damage(
+                    Universal_array[1][int(code)].damage(
                         self.attack_power, array, pseudo_array)
                 elif code[0] == 'C':
                     code = code[1:len(code):1]
-                    canon_list[int(code)].damage(
+                    Universal_array[2][int(code)].damage(
                         self.attack_power, array, pseudo_array)
                 elif code[0] == 'Y':
                     code = code[1:len(code):1]
-                    wizard_tower_list[int(code)].damage(self.attack_power, array, pseudo_array)
+                    Universal_array[3][int(code)].damage(
+                        self.attack_power, array, pseudo_array)
                 elif code[0] == 'W':
                     code = code[1:len(code):1]
                     code = int(code)
-                    wall[code].damage(self.attack_power, array, pseudo_array)
+                    Universal_array[4][code].damage(self.attack_power, array, pseudo_array)
 
         elif self.last_move == "s":
             if(pseudo_array[curr_X+1][curr_Y] != ' '):
                 code = pseudo_array[curr_X+1][curr_Y]
                 # parse code into letter and number
                 if code[0] == 'T':
-                    townhall.damage(self.attack_power, array, pseudo_array)
+                    Universal_array[0][0].damage(self.attack_power, array, pseudo_array)
                 elif code[0] == 'H':
                     code = code[1:len(code):1]
-                    list_hut[int(code)].damage(
+                    Universal_array[1][int(code)].damage(
                         self.attack_power, array, pseudo_array)
                 elif code[0] == 'C':
                     code = code[1:len(code):1]
-                    canon_list[int(code)].damage(
+                    Universal_array[2][int(code)].damage(
                         self.attack_power, array, pseudo_array)
                 elif code[0] == 'Y':
                     code = code[1:len(code):1]
-                    wizard_tower_list[int(code)].damage(self.attack_power, array, pseudo_array)
+                    Universal_array[3][int(code)].damage(
+                        self.attack_power, array, pseudo_array)
                 elif code[0] == 'W':
                     code = code[1:len(code):1]
                     code = int(code)
-                    wall[code].damage(self.attack_power, array, pseudo_array)
+                    Universal_array[4][code].damage(self.attack_power, array, pseudo_array)
 
         elif self.last_move == "a":
             if(pseudo_array[curr_X][curr_Y-1] != ' '):
                 code = pseudo_array[curr_X][curr_Y-1]
                 # parse code into letter and number
                 if code[0] == 'T':
-                    townhall.damage(self.attack_power, array, pseudo_array)
+                    Universal_array[0][0].damage(self.attack_power, array, pseudo_array)
                 elif code[0] == 'H':
                     code = code[1:len(code):1]
-                    list_hut[int(code)].damage(
+                    Universal_array[1][int(code)].damage(
                         self.attack_power, array, pseudo_array)
                 elif code[0] == 'C':
                     code = code[1:len(code):1]
-                    canon_list[int(code)].damage(
+                    Universal_array[2][int(code)].damage(
                         self.attack_power, array, pseudo_array)
                 elif code[0] == 'Y':
                     code = code[1:len(code):1]
-                    wizard_tower_list[int(code)].damage(self.attack_power, array, pseudo_array)
+                    Universal_array[3][int(code)].damage(
+                        self.attack_power, array, pseudo_array)
                 elif code[0] == 'W':
                     code = code[1:len(code):1]
                     code = int(code)
-                    wall[code].damage(self.attack_power, array, pseudo_array)
+                    Universal_array[4][code].damage(self.attack_power, array, pseudo_array)
 
         elif self.last_move == "d":
             if(pseudo_array[curr_X][curr_Y+1] != ' '):
                 code = pseudo_array[curr_X][curr_Y+1]
                 # parse code into letter and number
                 if code[0] == 'T':
-                    townhall.damage(self.attack_power, array, pseudo_array)
+                    Universal_array[0][0].damage(self.attack_power, array, pseudo_array)
                 elif code[0] == 'H':
                     code = code[1:len(code):1]
-                    list_hut[int(code)].damage(
+                    Universal_array[1][int(code)].damage(
                         self.attack_power, array, pseudo_array)
                 elif code[0] == 'C':
                     code = code[1:len(code):1]
-                    canon_list[int(code)].damage(
+                    Universal_array[2][int(code)].damage(
                         self.attack_power, array, pseudo_array)
                 elif code[0] == 'Y':
                     code = code[1:len(code):1]
-                    wizard_tower_list[int(code)].damage(self.attack_power, array, pseudo_array)
+                    Universal_array[3][int(code)].damage(
+                        self.attack_power, array, pseudo_array)
                 elif code[0] == 'W':
                     code = code[1:len(code):1]
                     code = int(code)
-                    wall[code].damage(self.attack_power, array, pseudo_array)
+                    Universal_array[4][code].damage(self.attack_power, array, pseudo_array)
 
     def leviathan(self, array, pseudo_array, Universal_array):
         for i in range(5):
@@ -209,6 +212,7 @@ class king(Character):
         self.movement_speed = 1
         # self.color = Back.BLUE
 
+
 class Archer_Queen(Character):
     def __init__(self, x_coor, y_coor, array, pseudo_array):
         self.type = "Archer_Queen"
@@ -221,7 +225,7 @@ class Archer_Queen(Character):
         self.last_move = " "
         self.attack_power = gv.attack_power_archer_queen
         self.movement_speed = 1
-        
+
     def attack(self, array, pseudo_array, Universal_array):
         curr_X = self.x_coor
         curr_Y = self.y_coor
@@ -246,19 +250,18 @@ class Archer_Queen(Character):
 
                     if(man_abs_x <= 5/2 and man_abs_y <= 5/2):
                         j.damage(self.attack_power, array, pseudo_array)
-        
-        
+
         if self.last_move == "a":
             # queen facing West
             # centre of volley attack = (curr_x, curr_y - 8)
             for i in range(5):
                 for j in Universal_array[i]:
                     man_abs_x = abs(self.x_coor - j.X_coor)
-                    man_abs_y = abs(self.y_coor -8- j.Y_coor)
+                    man_abs_y = abs(self.y_coor - 8 - j.Y_coor)
 
                     if(man_abs_x <= 5/2 and man_abs_y <= 5/2):
                         j.damage(self.attack_power, array, pseudo_array)
-        
+
         if self.last_move == "d":
             # queen facing north
             # centre of volley attack = (curr_x, curr_y + 8)
@@ -270,7 +273,6 @@ class Archer_Queen(Character):
                     if(man_abs_x <= 5/2 and man_abs_y <= 5/2):
                         j.damage(self.attack_power, array, pseudo_array)
 
-    
     def leviathan(self, array, pseudo_array, Universal_array):
         if self.last_move == "w":
             # queen facing north
@@ -293,8 +295,7 @@ class Archer_Queen(Character):
 
                     if(man_abs_x <= 9/2 and man_abs_y <= 9/2):
                         j.damage(self.attack_power, array, pseudo_array)
-        
-        
+
         if self.last_move == "a":
             # queen facing West
             # centre of volley attack = (curr_x, curr_y - 8)
@@ -305,7 +306,7 @@ class Archer_Queen(Character):
 
                     if(man_abs_x <= 9/2 and man_abs_y <= 9/2):
                         j.damage(self.attack_power, array, pseudo_array)
-        
+
         if self.last_move == "d":
             # queen facing north
             # centre of volley attack = (curr_x, curr_y + 8)
@@ -316,7 +317,6 @@ class Archer_Queen(Character):
 
                     if(man_abs_x <= 9/2 and man_abs_y <= 9/2):
                         j.damage(self.attack_power, array, pseudo_array)
-
 
 
 class Nuke(Character):
@@ -368,289 +368,87 @@ class barbarians(Character):
         self.id = barbarian_count
         self.movement_speed = 1
 
-    def bar_move(self, array, pseudo_array):
+    def bar_move(self, array, pseudo_array, Universal_array):
         old_x = self.x_coor
         old_y = self.y_coor
 
         if(self.health > 0):
-
-            # iterate over all the objects and find nearest object
-            # Euclidean distance
-            # iterate over Universal_array
+            attacked = False
             min_distance = 10000
-            i_temp, j_temp = 0, 0
+            obj = Universal_array[0][0]
             for i in range(4):
-                for j in range(len(Universal_array[i])):
-                    x_diff = abs(self.x_coor - Universal_array[i][j].X_coor)**2
-                    y_diff = abs(self.y_coor - Universal_array[i][j].Y_coor)**2
-                    euclidean = x_diff + y_diff
-                    if(min_distance >= euclidean):
-                        min_distance = euclidean
-                        i_temp = i
-                        j_temp = j
+                for j in Universal_array[i]:
+                    dist = ((self.x_coor - j.X_coor)**2 +
+                            (self.y_coor - j.Y_coor)**2)**0.5
+                    if(dist < min_distance):
+                        min_distance = dist
+                        obj = j
 
-            x_diff = abs(
-                self.x_coor - Universal_array[i_temp][j_temp].X_coor)**2
-            y_diff = abs(
-                self.y_coor - Universal_array[i_temp][j_temp].Y_coor)**2
+            man_abs_x = abs(self.x_coor - obj.X_coor)
+            man_abs_y = abs(self.y_coor - obj.Y_coor)
 
-            if((x_diff == 1 or y_diff == 1) or (x_diff == 1 or y_diff == 0) or (x_diff == 0 or y_diff == 0) or (x_diff == 0 or y_diff == 1)):
-                self.attack(array, pseudo_array)
+            if((man_abs_x == 1 and man_abs_y == 0) or (man_abs_y == 1 and man_abs_x == 0) or (man_abs_x == 1 and man_abs_y == 1)):
+                print("Building hai paas mai")
+                obj.damage(self.attack_power, array, pseudo_array)
+                attacked = True
 
-            if(self.x_coor > Universal_array[i_temp][j_temp].X_coor and self.y_coor == Universal_array[i_temp][j_temp].Y_coor and (pseudo_array[self.x_coor-1][self.y_coor] == ' ' or pseudo_array[self.x_coor-1][self.y_coor] == 'B' or pseudo_array[self.x_coor-1][self.y_coor] == 'K')):
-                self.x_coor -= 1
-                self.last_move = 'w'
-                array[old_x][old_y] = " "
-                pseudo_array[old_x][old_y] = " "
-                array[self.x_coor][self.y_coor] = self.color + \
-                    "B" + Style.RESET_ALL
-                pseudo_array[self.x_coor][self.y_coor] = "B"
-            elif(self.x_coor < Universal_array[i_temp][j_temp].X_coor and self.y_coor == Universal_array[i_temp][j_temp].Y_coor and (pseudo_array[self.x_coor+1][self.y_coor] == ' ' or pseudo_array[self.x_coor+1][self.y_coor] == 'B' or pseudo_array[self.x_coor+1][self.y_coor] == 'K')):
-                self.x_coor += 1
-                self.last_move = 's'
-                array[old_x][old_y] = " "
-                pseudo_array[old_x][old_y] = " "
-                array[self.x_coor][self.y_coor] = self.color + \
-                    "B" + Style.RESET_ALL
-                pseudo_array[self.x_coor][self.y_coor] = "B"
-            elif(self.x_coor == Universal_array[i_temp][j_temp].X_coor and self.y_coor > Universal_array[i_temp][j_temp].Y_coor and (pseudo_array[self.x_coor][self.y_coor-1] == ' ' or pseudo_array[self.x_coor][self.y_coor-1] == 'B' or pseudo_array[self.x_coor][self.y_coor-1] == 'K')):
-                self.y_coor -= 1
-                self.last_move = 'a'
-                array[old_x][old_y] = " "
-                pseudo_array[old_x][old_y] = " "
-                array[self.x_coor][self.y_coor] = self.color + \
-                    "B" + Style.RESET_ALL
-                pseudo_array[self.x_coor][self.y_coor] = "B"
-            elif(self.x_coor == Universal_array[i_temp][j_temp].X_coor and self.y_coor < Universal_array[i_temp][j_temp].Y_coor and (pseudo_array[self.x_coor][self.y_coor+1] == ' ' or pseudo_array[self.x_coor][self.y_coor+1] == 'B' or pseudo_array[self.x_coor][self.y_coor+1] == 'K')):
-                self.y_coor += 1
-                self.last_move = 'd'
-                array[old_x][old_y] = " "
-                pseudo_array[old_x][old_y] = " "
-                array[self.x_coor][self.y_coor] = self.color + \
-                    "B" + Style.RESET_ALL
-                pseudo_array[self.x_coor][self.y_coor] = "B"
-            elif(self.x_coor > Universal_array[i_temp][j_temp].X_coor and self.y_coor > Universal_array[i_temp][j_temp].Y_coor and (pseudo_array[self.x_coor-1][self.y_coor-1] == ' ' or pseudo_array[self.x_coor-1][self.y_coor-1] == 'B' or pseudo_array[self.x_coor-1][self.y_coor-1] == 'K')):
-                self.x_coor -= 1
-                self.y_coor -= 1
-                self.last_move = '#'
-                array[old_x][old_y] = " "
-                pseudo_array[old_x][old_y] = " "
-                array[self.x_coor][self.y_coor] = self.color + \
-                    "B" + Style.RESET_ALL
-                pseudo_array[self.x_coor][self.y_coor] = "B"
-            elif(self.x_coor > Universal_array[i_temp][j_temp].X_coor and self.y_coor < Universal_array[i_temp][j_temp].Y_coor and (pseudo_array[self.x_coor-1][self.y_coor+1] == ' ' or pseudo_array[self.x_coor-1][self.y_coor+1] == 'B' or pseudo_array[self.x_coor-1][self.y_coor+1] == 'K')):
-                self.x_coor -= 1
-                self.y_coor += 1
-                self.last_move = '#'
-                array[old_x][old_y] = " "
-                pseudo_array[old_x][old_y] = " "
-                array[self.x_coor][self.y_coor] = self.color + \
-                    "B" + Style.RESET_ALL
-                pseudo_array[self.x_coor][self.y_coor] = "B"
-            elif(self.x_coor < Universal_array[i_temp][j_temp].X_coor and self.y_coor > Universal_array[i_temp][j_temp].Y_coor and (pseudo_array[self.x_coor+1][self.y_coor-1] == ' ' or pseudo_array[self.x_coor+1][self.y_coor-1] == 'B' or pseudo_array[self.x_coor+1][self.y_coor-1] == 'K')):
-                self.x_coor += 1
-                self.y_coor -= 1
-                self.last_move = '#'
-                array[old_x][old_y] = " "
-                pseudo_array[old_x][old_y] = " "
-                array[self.x_coor][self.y_coor] = self.color + \
-                    "B" + Style.RESET_ALL
-                pseudo_array[self.x_coor][self.y_coor] = "B"
-            elif(self.x_coor < Universal_array[i_temp][j_temp].X_coor and self.y_coor < Universal_array[i_temp][j_temp].Y_coor and (pseudo_array[self.x_coor+1][self.y_coor+1] == ' ' or pseudo_array[self.x_coor+1][self.y_coor+1] == 'B' or pseudo_array[self.x_coor+1][self.y_coor+1] == 'K')):
-                self.x_coor += 1
-                self.y_coor += 1
-                self.last_move = '#'
-                array[old_x][old_y] = " "
-                pseudo_array[old_x][old_y] = " "
-                array[self.x_coor][self.y_coor] = self.color + \
-                    "B" + Style.RESET_ALL
-                pseudo_array[self.x_coor][self.y_coor] = "B"
+            if(attacked == False):
+                print("No buildings to attack")
+                # move towards the nearest building other than wall
+                if(self.x_coor == obj.X_coor):
+                    if(self.y_coor > obj.Y_coor):
+                        self.y_coor -= 1
+                        self.last_move = 'a'
+                    else:
+                        self.y_coor += 1
+                        self.last_move = 'd'
+                elif(self.y_coor == obj.Y_coor):
+                    if(self.x_coor > obj.X_coor):
+                        self.x_coor -= 1
+                        self.last_move = 'w'
+                    else:
+                        self.x_coor += 1
+                        self.last_move = 's'
+                elif(self.x_coor > obj.X_coor):
+                    if(self.y_coor > obj.Y_coor):
+                        self.x_coor -= 1
+                        self.y_coor -= 1
+                        self.last_move = 'q'
+                    else:
+                        self.x_coor -= 1
+                        self.y_coor += 1
+                        self.last_move = 'e'
+                elif(self.x_coor < obj.X_coor):
+                    if(self.y_coor > obj.Y_coor):
+                        self.x_coor += 1
+                        self.y_coor -= 1
+                        self.last_move = 'z'
+                    else:
+                        self.x_coor += 1
+                        self.y_coor += 1
+                        self.last_move = 'c'
 
-    def attack(self, array, pseudo_array):
-        curr_X = self.x_coor
-        curr_Y = self.y_coor
+                if(pseudo_array[self.x_coor][self.y_coor] == ' '):
+                    print("Move freely")
+                    pseudo_array[self.x_coor][self.y_coor] = "B"
+                    array[self.x_coor][self.y_coor] = self.color + \
+                        "B" + Style.RESET_ALL
+                    array[old_x][old_y] = " "
+                    pseudo_array[old_x][old_y] = " "
 
-        if(self.health > 0):
-            if(pseudo_array[curr_X-1][curr_Y] != ' ' and pseudo_array[curr_X-1][curr_Y] != 'K' and pseudo_array[curr_X-1][curr_Y] != 'B'):
-                code = pseudo_array[curr_X-1][curr_Y]
-                # parse code into letter and number
-                if code[0] == 'T':
-                    townhall.damage(self.attack_power, array, pseudo_array)
-                elif code[0] == 'H':
-                    code = code[1:len(code):1]
-                    list_hut[int(code)].damage(
-                        self.attack_power, array, pseudo_array)
-                elif code[0] == 'C':
-                    code = code[1:len(code):1]
-                    canon_list[int(code)].damage(
-                        self.attack_power, array, pseudo_array)
-                elif code[0] == 'Y':
-                    code = code[1:len(code):1]
-                    wizard_tower_list[int(code)].damage(
-                        self.attack_power, array, pseudo_array)
-                elif code[0] == 'W':
-                    code = code[1:len(code):1]
-                    code = int(code)
-                    wall[code].damage(self.attack_power,
-                                      array, pseudo_array)
-                                      
-            elif(pseudo_array[curr_X][curr_Y-1] != ' ' and pseudo_array[curr_X][curr_Y-1] != 'K' and pseudo_array[curr_X][curr_Y-1] != 'B'):
-                code = pseudo_array[curr_X][curr_Y-1]
-                # parse code into letter and number
-                if code[0] == 'T':
-                    townhall.damage(self.attack_power, array, pseudo_array)
-                elif code[0] == 'H':
-                    code = code[1:len(code):1]
-                    list_hut[int(code)].damage(
-                        self.attack_power, array, pseudo_array)
-                elif code[0] == 'C':
-                    code = code[1:len(code):1]
-                    canon_list[int(code)].damage(
-                        self.attack_power, array, pseudo_array)
-                elif code[0] == 'Y':
-                    code = code[1:len(code):1]
-                    wizard_tower_list[int(code)].damage(
-                        self.attack_power, array, pseudo_array)
-                elif code[0] == 'W':
-                    code = code[1:len(code):1]
-                    code = int(code)
-                    wall[code].damage(self.attack_power,
-                                      array, pseudo_array)
-            elif(pseudo_array[curr_X+1][curr_Y] != ' ' and pseudo_array[curr_X+1][curr_Y] != 'K' and pseudo_array[curr_X+1][curr_Y] != 'B'):
-                code = pseudo_array[curr_X+1][curr_Y]
-                # parse code into letter and number
-                if code[0] == 'T':
-                    townhall.damage(self.attack_power, array, pseudo_array)
-                elif code[0] == 'H':
-                    code = code[1:len(code):1]
-                    list_hut[int(code)].damage(
-                        self.attack_power, array, pseudo_array)
-                elif code[0] == 'C':
-                    code = code[1:len(code):1]
-                    canon_list[int(code)].damage(
-                        self.attack_power, array, pseudo_array)
-                elif code[0] == 'Y':
-                    code = code[1:len(code):1]
-                    wizard_tower_list[int(code)].damage(
-                        self.attack_power, array, pseudo_array)
-                elif code[0] == 'W':
-                    code = code[1:len(code):1]
-                    code = int(code)
-                    wall[code].damage(self.attack_power,
-                                      array, pseudo_array)
-            elif(pseudo_array[curr_X][curr_Y+1] != ' ' and pseudo_array[curr_X][curr_Y+1] != 'K' and pseudo_array[curr_X][curr_Y+1] != 'B'):
-                code = pseudo_array[curr_X][curr_Y+1]
-                # parse code into letter and number
-                if code[0] == 'T':
-                    townhall.damage(self.attack_power, array, pseudo_array)
-                elif code[0] == 'H':
-                    code = code[1:len(code):1]
-                    list_hut[int(code)].damage(
-                        self.attack_power, array, pseudo_array)
-                elif code[0] == 'C':
-                    code = code[1:len(code):1]
-                    canon_list[int(code)].damage(
-                        self.attack_power, array, pseudo_array)
-                elif code[0] == 'Y':
-                    code = code[1:len(code):1]
-                    wizard_tower_list[int(code)].damage(
-                        self.attack_power, array, pseudo_array)
-                elif code[0] == 'W':
-                    code = code[1:len(code):1]
-                    code = int(code)
-                    wall[code].damage(self.attack_power,
-                                      array, pseudo_array)
-            elif(pseudo_array[curr_X-1][curr_Y-1] != ' ' and pseudo_array[curr_X-1][curr_Y-1] != 'K' and pseudo_array[curr_X-1][curr_Y-1] != 'B'):
-                code = pseudo_array[curr_X-1][curr_Y-1]
-                # parse code into letter and number
-                if code[0] == 'T':
-                    townhall.damage(self.attack_power, array, pseudo_array)
-                elif code[0] == 'H':
-                    code = code[1:len(code):1]
-                    list_hut[int(code)].damage(
-                        self.attack_power, array, pseudo_array)
-                elif code[0] == 'C':
-                    code = code[1:len(code):1]
-                    canon_list[int(code)].damage(
-                        self.attack_power, array, pseudo_array)
-                elif code[0] == 'Y':
-                    code = code[1:len(code):1]
-                    wizard_tower_list[int(code)].damage(
-                        self.attack_power, array, pseudo_array)
-                elif code[0] == 'W':
-                    code = code[1:len(code):1]
-                    code = int(code)
-                    wall[code].damage(self.attack_power,
-                                      array, pseudo_array)
-            elif(pseudo_array[curr_X+1][curr_Y-1] != ' ' and pseudo_array[curr_X+1][curr_Y-1] != 'K' and pseudo_array[curr_X+1][curr_Y-1] != 'B'):
-                code = pseudo_array[curr_X+1][curr_Y-1]
-                # parse code into letter and number
-                if code[0] == 'T':
-                    townhall.damage(self.attack_power, array, pseudo_array)
-                elif code[0] == 'H':
-                    code = code[1:len(code):1]
-                    list_hut[int(code)].damage(
-                        self.attack_power, array, pseudo_array)
-                elif code[0] == 'C':
-                    code = code[1:len(code):1]
-                    canon_list[int(code)].damage(
-                        self.attack_power, array, pseudo_array)
-                elif code[0] == 'Y':
-                    code = code[1:len(code):1]
-                    wizard_tower_list[int(code)].damage(
-                        self.attack_power, array, pseudo_array)
-                elif code[0] == 'W':
-                    code = code[1:len(code):1]
-                    code = int(code)
-                    wall[code].damage(self.attack_power,
-                                      array, pseudo_array)
-            elif(pseudo_array[curr_X-1][curr_Y+1] != ' ' and pseudo_array[curr_X-1][curr_Y+1] != 'K' and pseudo_array[curr_X-1][curr_Y+1] != 'B'):
-                code = pseudo_array[curr_X-1][curr_Y+1]
-                # parse code into letter and number
-                if code[0] == 'T':
-                    townhall.damage(self.attack_power, array, pseudo_array)
-                elif code[0] == 'H':
-                    code = code[1:len(code):1]
-                    list_hut[int(code)].damage(
-                        self.attack_power, array, pseudo_array)
-                elif code[0] == 'C':
-                    code = code[1:len(code):1]
-                    canon_list[int(code)].damage(
-                        self.attack_power, array, pseudo_array)
-                elif code[0] == 'Y':
-                    code = code[1:len(code):1]
-                    wizard_tower_list[int(code)].damage(
-                        self.attack_power, array, pseudo_array)
-                elif code[0] == 'W':
-                    code = code[1:len(code):1]
-                    code = int(code)
-                    wall[code].damage(self.attack_power,
-                                      array, pseudo_array)
-            elif(pseudo_array[curr_X+1][curr_Y+1] != ' ' and pseudo_array[curr_X+1][curr_Y+1] != 'K' and pseudo_array[curr_X+1][curr_Y+1] != 'B'):
-                code = pseudo_array[curr_X+1][curr_Y+1]
-                # parse code into letter and number
-                if code[0] == 'T':
-                    townhall.damage(self.attack_power, array, pseudo_array)
-                elif code[0] == 'H':
-                    code = code[1:len(code):1]
-                    list_hut[int(code)].damage(
-                        self.attack_power, array, pseudo_array)
-                elif code[0] == 'C':
-                    code = code[1:len(code):1]
-                    canon_list[int(code)].damage(
-                        self.attack_power, array, pseudo_array)
-                elif code[0] == 'Y':
-                    code = code[1:len(code):1]
-                    wizard_tower_list[int(code)].damage(
-                        self.attack_power, array, pseudo_array)
-                elif code[0] == 'W':
-                    code = code[1:len(code):1]
-                    code = int(code)
-                    wall[code].damage(self.attack_power,
-                                      array, pseudo_array)
-
-            else:
-                return
+                else:
+                    code = pseudo_array[self.x_coor][self.y_coor]
+                    if(code[0] == 'W'):
+                        print("wall pe attack kar raha hai")
+                        self.x_coor = old_x
+                        self.y_coor = old_y
+                        code = code[1:len(code):1]
+                        code = int(code)
+                        Universal_array[4][code].damage(self.attack_power, array, pseudo_array)
+                    else:
+                        print("stack")
+                        pseudo_array[old_x][old_y] = " "
+                        array[old_x][old_y] = " "
 
     def health_bar(self, array, pseudo_array):
         health = self.health
@@ -681,9 +479,11 @@ class Archers(Character):
         self.type = "Archers"
         self.x_coor = x_coor
         self.y_coor = y_coor
+        self.char = "V"
         self.color = Back.GREEN
-        array[self.x_coor][self.y_coor] = self.color + "A" + Style.RESET_ALL
-        pseudo_array[self.x_coor][self.y_coor] = "A"
+        array[self.x_coor][self.y_coor] = self.color + \
+            self.char + Style.RESET_ALL
+        pseudo_array[self.x_coor][self.y_coor] = self.char
         self.health = gv.max_health_archers
         self.last_move = " "
         self.attack_power = gv.attack_power_archers
@@ -697,136 +497,122 @@ class Archers(Character):
 
         attacked = False
 
-        if(self.health>0):
-
-            temp_x = self.x_coor
-            temp_y = self.y_coor
-            
-            if(self.last_move == "w" or self.last_move == "#"):
-                temp_x = self.x_coor - 1
-                temp_y = self.y_coor 
-            elif(self.last_move == "s" or self.last_move == "#"):
-                temp_x = self.x_coor + 1
-                temp_y = self.y_coor
-            elif(self.last_move == "a" or self.last_move == "#"):
-                temp_y = self.y_coor - 1
-                temp_x = self.x_coor
-            elif(self.last_move == "d" or self.last_move == "#"):
-                temp_y = self.y_coor + 1
-                temp_x = self.x_coor
-            
-            # find wall with temp_x and temp_y coordinates
-            for i in range(len(wall)):
-                if(wall[i].X_coor == temp_x and wall[i].Y_coor == temp_y):
-                    wall[i].damage(self.attack_power, array, pseudo_array)
-                    attacked = True
-                    break 
-            if(attacked == False): 
-            # now check if there is no building in range
+        if(self.health > 0):
+            if(attacked == False):
+                # check if there is any building in range
                 for i in range(4):
                     for j in Universal_array[i]:
                         # check if its under range
-                        dist = ((self.x_coor-j.X_coor)**2 + (self.y_coor-j.Y_coor)**2)**0.5
-                        if(dist<=8):
+                        dist = ((self.x_coor-j.X_coor)**2 +
+                                (self.y_coor-j.Y_coor)**2)**0.5
+                        if(dist <= 4):
                             j.damage(self.attack_power, array, pseudo_array)
                             attacked = True
-                        break
+                            break
                     if(attacked == True):
                         break
-                
+
+            if(attacked == False):
+
+                temp_x = self.x_coor
+                temp_y = self.y_coor
+
+                if(self.last_move == "w"):
+                    temp_x = self.x_coor - 1
+                    temp_y = self.y_coor
+                elif(self.last_move == "s"):
+                    temp_x = self.x_coor + 1
+                    temp_y = self.y_coor
+                elif(self.last_move == "a"):
+                    temp_y = self.y_coor - 1
+                    temp_x = self.x_coor
+                elif(self.last_move == "d"):
+                    temp_y = self.y_coor + 1
+                    temp_x = self.x_coor
+                elif(self.last_move == "q"):
+                    temp_x = self.x_coor - 1
+                    temp_y = self.y_coor - 1
+                elif(self.last_move == "e"):
+                    temp_x = self.x_coor - 1
+                    temp_y = self.y_coor + 1
+                elif(self.last_move == "z"):
+                    temp_x = self.x_coor + 1
+                    temp_y = self.y_coor - 1
+                elif(self.last_move == "c"):
+                    temp_x = self.x_coor + 1
+                    temp_y = self.y_coor + 1
+
+                # find wall with temp_x and temp_y coordinates
+                for i in range(len(Universal_array[4])):
+                    if(Universal_array[4][i].X_coor == temp_x and Universal_array[4][i].Y_coor == temp_y):
+                        Universal_array[4][i].damage(self.attack_power, array, pseudo_array)
+                        attacked = True
+                        break
+
             if(attacked == False):
                 # move
+                obj = Universal_array[0][0]
                 min_distance = 10000
-                i_temp, j_temp = 0, 0
                 for i in range(4):
-                    for j in range(len(Universal_array[i])):
-                        x_diff = abs(self.x_coor - Universal_array[i][j].X_coor)**2
-                        y_diff = abs(self.y_coor - Universal_array[i][j].Y_coor)**2
-                        euclidean = x_diff + y_diff
-                        if(min_distance >= euclidean):
-                            min_distance = euclidean
-                            i_temp = i
-                            j_temp = j
+                    for j in Universal_array[i]:
+                        dist = ((self.x_coor-j.X_coor)**2 +
+                                (self.y_coor-j.Y_coor)**2)**0.5
+                        if(dist < min_distance):
+                            obj = j
+                            min_distance = dist
 
-                x_diff = abs(
-                    self.x_coor - Universal_array[i_temp][j_temp].X_coor)**2
-                y_diff = abs(
-                    self.y_coor - Universal_array[i_temp][j_temp].Y_coor)**2
+                if(self.x_coor == obj.X_coor):
+                    if(self.y_coor < obj.Y_coor):
+                        self.last_move = "d"
+                        self.y_coor += 1
+                    else:
+                        self.last_move = "a"
+                        self.y_coor -= 1
 
-                if((x_diff == 1 or y_diff == 1) or (x_diff == 1 or y_diff == 0) or (x_diff == 0 or y_diff == 0) or (x_diff == 0 or y_diff == 1)):
-                    self.attack(array, pseudo_array)
+                elif(self.y_coor == obj.Y_coor):
+                    if(self.x_coor < obj.X_coor):
+                        self.last_move = "s"
+                        self.x_coor += 1
+                    else:
+                        self.last_move = "w"
+                        self.x_coor -= 1
 
-                if(self.x_coor > Universal_array[i_temp][j_temp].X_coor and self.y_coor == Universal_array[i_temp][j_temp].Y_coor and (pseudo_array[self.x_coor-1][self.y_coor] == ' ' or pseudo_array[self.x_coor-1][self.y_coor] == 'B' or pseudo_array[self.x_coor-1][self.y_coor] == 'K')):
-                    self.x_coor -= 1
-                    self.last_move = 'w'
-                    array[old_x][old_y] = " "
-                    pseudo_array[old_x][old_y] = " "
-                    array[self.x_coor][self.y_coor] = self.color + \
-                        "A" + Style.RESET_ALL
-                    pseudo_array[self.x_coor][self.y_coor] = "A"
-                elif(self.x_coor < Universal_array[i_temp][j_temp].X_coor and self.y_coor == Universal_array[i_temp][j_temp].Y_coor and (pseudo_array[self.x_coor+1][self.y_coor] == ' ' or pseudo_array[self.x_coor+1][self.y_coor] == 'B' or pseudo_array[self.x_coor+1][self.y_coor] == 'K')):
-                    self.x_coor += 1
-                    self.last_move = 's'
-                    array[old_x][old_y] = " "
-                    pseudo_array[old_x][old_y] = " "
-                    array[self.x_coor][self.y_coor] = self.color + \
-                        "A" + Style.RESET_ALL
-                    pseudo_array[self.x_coor][self.y_coor] = "A"
-                elif(self.x_coor == Universal_array[i_temp][j_temp].X_coor and self.y_coor > Universal_array[i_temp][j_temp].Y_coor and (pseudo_array[self.x_coor][self.y_coor-1] == ' ' or pseudo_array[self.x_coor][self.y_coor-1] == 'B' or pseudo_array[self.x_coor][self.y_coor-1] == 'K')):
-                    self.y_coor -= 1
-                    self.last_move = 'a'
-                    array[old_x][old_y] = " "
-                    pseudo_array[old_x][old_y] = " "
-                    array[self.x_coor][self.y_coor] = self.color + \
-                        "A" + Style.RESET_ALL
-                    pseudo_array[self.x_coor][self.y_coor] = "A"
-                elif(self.x_coor == Universal_array[i_temp][j_temp].X_coor and self.y_coor < Universal_array[i_temp][j_temp].Y_coor and (pseudo_array[self.x_coor][self.y_coor+1] == ' ' or pseudo_array[self.x_coor][self.y_coor+1] == 'B' or pseudo_array[self.x_coor][self.y_coor+1] == 'K')):
-                    self.y_coor += 1
-                    self.last_move = 'd'
-                    array[old_x][old_y] = " "
-                    pseudo_array[old_x][old_y] = " "
-                    array[self.x_coor][self.y_coor] = self.color + \
-                        "A" + Style.RESET_ALL
-                    pseudo_array[self.x_coor][self.y_coor] = "A"
-                elif(self.x_coor > Universal_array[i_temp][j_temp].X_coor and self.y_coor > Universal_array[i_temp][j_temp].Y_coor and (pseudo_array[self.x_coor-1][self.y_coor-1] == ' ' or pseudo_array[self.x_coor-1][self.y_coor-1] == 'B' or pseudo_array[self.x_coor-1][self.y_coor-1] == 'K')):
-                    self.x_coor -= 1
-                    self.y_coor -= 1
-                    self.last_move = '#'
-                    array[old_x][old_y] = " "
-                    pseudo_array[old_x][old_y] = " "
-                    array[self.x_coor][self.y_coor] = self.color + \
-                        "A" + Style.RESET_ALL
-                    pseudo_array[self.x_coor][self.y_coor] = "A"
-                elif(self.x_coor > Universal_array[i_temp][j_temp].X_coor and self.y_coor < Universal_array[i_temp][j_temp].Y_coor and (pseudo_array[self.x_coor-1][self.y_coor+1] == ' ' or pseudo_array[self.x_coor-1][self.y_coor+1] == 'B' or pseudo_array[self.x_coor-1][self.y_coor+1] == 'K')):
-                    self.x_coor -= 1
-                    self.y_coor += 1
-                    self.last_move = '#'
-                    array[old_x][old_y] = " "
-                    pseudo_array[old_x][old_y] = " "
-                    array[self.x_coor][self.y_coor] = self.color + \
-                        "A" + Style.RESET_ALL
-                    pseudo_array[self.x_coor][self.y_coor] = "A"
-                elif(self.x_coor < Universal_array[i_temp][j_temp].X_coor and self.y_coor > Universal_array[i_temp][j_temp].Y_coor and (pseudo_array[self.x_coor+1][self.y_coor-1] == ' ' or pseudo_array[self.x_coor+1][self.y_coor-1] == 'B' or pseudo_array[self.x_coor+1][self.y_coor-1] == 'K')):
-                    self.x_coor += 1
-                    self.y_coor -= 1
-                    self.last_move = '#'
-                    array[old_x][old_y] = " "
-                    pseudo_array[old_x][old_y] = " "
-                    array[self.x_coor][self.y_coor] = self.color + \
-                        "A" + Style.RESET_ALL
-                    pseudo_array[self.x_coor][self.y_coor] = "A"
-                elif(self.x_coor < Universal_array[i_temp][j_temp].X_coor and self.y_coor < Universal_array[i_temp][j_temp].Y_coor and (pseudo_array[self.x_coor+1][self.y_coor+1] == ' ' or pseudo_array[self.x_coor+1][self.y_coor+1] == 'B' or pseudo_array[self.x_coor+1][self.y_coor+1] == 'K')):
-                    self.x_coor += 1
-                    self.y_coor += 1
-                    self.last_move = '#'
-                    array[old_x][old_y] = " "
-                    pseudo_array[old_x][old_y] = " "
-                    array[self.x_coor][self.y_coor] = self.color + \
-                        "A" + Style.RESET_ALL
-                    pseudo_array[self.x_coor][self.y_coor] = "A"
+                elif(self.x_coor > obj.X_coor):
+                    if(self.y_coor < obj.Y_coor):
+                        self.last_move = "e"
+                        self.x_coor -= 1
+                        self.y_coor += 1
+                    else:
+                        self.last_move = "q"
+                        self.x_coor -= 1
+                        self.y_coor -= 1
 
+                elif(self.x_coor < obj.X_coor):
+                    if(self.y_coor < obj.Y_coor):
+                        self.last_move = "c"
+                        self.x_coor += 1
+                        self.y_coor += 1
+                    else:
+                        self.last_move = "z"
+                        self.x_coor += 1
+                        self.y_coor -= 1
 
-                        
+                if(pseudo_array[self.x_coor][self.y_coor] == ' '):
+                    array[old_x][old_y] = ' '
+                    pseudo_array[old_x][old_y] = ' '
+                    array[self.x_coor][self.y_coor] = self.color + \
+                        self.char + Style.RESET_ALL
+                    pseudo_array[self.x_coor][self.y_coor] = self.char
+
+                else:
+                    code = pseudo_array[self.x_coor][self.y_coor]
+                    if(code == 'T' or code == 'H' or code == 'C' or code == 'Y' or code == 'W'):
+                        self.x_coor = old_x
+                        self.y_coor = old_y
+
+                    else:
+                        pseudo_array[old_x][old_y] = ' '
+                        array[old_x][old_y] = ' '
 
     def health_bar(self, array, pseudo_array):
         health = self.health
@@ -848,19 +634,17 @@ class Archers(Character):
                 self.color = Back.RED
 
             array[self.x_coor][self.y_coor] = self.color + \
-                "A" + Style.RESET_ALL
-            pseudo_array[self.x_coor][self.y_coor] = "A"
-
-
-
+                self.char + Style.RESET_ALL
+            pseudo_array[self.x_coor][self.y_coor] = self.char
 
 
 class Balloons(Character):
-    
+
     def __init__(self, x_coor, y_coor, array, pseudo_array, balloon_count):
         self.type = "Balloons"
         self.x_coor = x_coor
         self.y_coor = y_coor
+        self.char = "O"
         self.color = Back.GREEN
         array[self.x_coor][self.y_coor] = self.color + "O" + Style.RESET_ALL
         pseudo_array[self.x_coor][self.y_coor] = "O"
@@ -874,90 +658,81 @@ class Balloons(Character):
         old_X = self.x_coor
         old_Y = self.y_coor
         if self.health > 0:
-            defbuil_list = []
-            defbuil_list.append(canon_list)
-            defbuil_list.append(wizard_tower_list)
-            defbuil_present = False
 
-            for i in range(len(defbuil_list)):
-                for j in defbuil_list[i]:
-                    if(j.health>0):
+            defbuil_present = False
+            attacked = False
+
+            # check if there are any defensive buildings left
+            for i in range(2, 4):
+                for j in Universal_array[i]:
+                    if(j.health > 0):
                         defbuil_present = True
                         break
                 if(defbuil_present):
                     break
-            
-            attacked = False
-            if(defbuil_present):
-                for i in range(len(defbuil_list)):
-                    for j in defbuil_list[i]:
-                        dist = ((self.x_coor - j.X_coor)**2 + (self.y_coor - j.Y_coor)**2)**0.5
-                        if dist <= 1.5:
-                            j.damage(self.attack_power, array, pseudo_array)
-                            attacked = True
-                            break
-                    if(attacked == True):
-                        break
-                
+
+            if(defbuil_present == True and attacked == False):
+                # find nearest defensive building
+                min_dist = 10000
+                obj = Universal_array[2][0]
+                for i in range(2, 4):
+                    for j in Universal_array[i]:
+                        dist = ((self.x_coor - j.X_coor)**2 +
+                                (self.y_coor - j.Y_coor)**2)**0.5
+                        if dist < min_dist:
+                            min_dist = dist
+                            obj = j
+
+                dist = ((self.x_coor - obj.X_coor)**2 +
+                        (self.y_coor - obj.Y_coor)**2)**0.5
+                if(dist < 1.5):
+                    obj.damage(self.attack_power, array, pseudo_array)
+                    attacked = True
+                    return
+
                 if(attacked == False):
-                    # find nearest defensive building
-                    min_dist = 10000
-                    for i in range(len(defbuil_list)):
-                        for j in defbuil_list[i]:
-                            dist = ((self.x_coor - j.X_coor)**2 + (self.y_coor - j.Y_coor)**2)**0.5
-                            if dist < min_dist:
-                                min_dist = dist
-                                obj = j
-                    
                     # j is at min euclidean distance
                     # move towards it
                     if(self.x_coor == obj.X_coor):
                         if(self.y_coor > obj.Y_coor):
                             self.y_coor -= 1
                             self.last_move = 'a'
-                            
+
                         else:
                             self.y_coor += 1
                             self.last_move = 'd'
-                            
 
                     elif(self.y_coor == obj.Y_coor):
                         if(self.x_coor > obj.X_coor):
                             self.x_coor -= 1
                             self.last_move = 'w'
-                            
+
                         else:
                             self.x_coor += 1
                             self.last_move = 's'
-                            
-                    
+
                     elif(self.x_coor > obj.X_coor):
                         if(self.y_coor > obj.Y_coor):
                             self.x_coor -= 1
                             self.y_coor -= 1
-                            self.last_move = '#'
-                            
+                            self.last_move = 'q'
+
                         else:
                             self.x_coor -= 1
                             self.y_coor += 1
-                            self.last_move = '#'
-                            
+                            self.last_move = 'e'
 
-                    
                     elif(self.x_coor < obj.X_coor):
                         if(self.y_coor > obj.Y_coor):
                             self.x_coor += 1
                             self.y_coor -= 1
-                            self.last_move = '#'
-                            
+                            self.last_move = 'z'
 
-                            
                         else:
                             self.x_coor += 1
                             self.y_coor += 1
-                            self.last_move = '#'
-                            
-                    
+                            self.last_move = 'c'
+
                     # make changes accordingly
                     if(pseudo_array[old_X][old_Y] == 'O'):
                         array[old_X][old_Y] = " "
@@ -967,79 +742,76 @@ class Balloons(Character):
                             "O" + Style.RESET_ALL
                         pseudo_array[self.x_coor][self.y_coor] = "O"
 
-                        
             else:
+
+                # find nearest building
+                min_dist = 10000
+                obj = Universal_array[0][0]
                 for i in range(2):
                     for j in Universal_array[i]:
-                        dist = ((self.x_coor - j.X_coor)**2 + (self.y_coor - j.Y_coor)**2)**0.5
-                        if dist <= 1.5:
-                            j.damage(self.attack_power, array, pseudo_array)
-                            attacked = True
-                            break
-                    if(attacked == True):
-                        break
+                        dist = ((self.x_coor - j.X_coor)**2 +
+                                (self.y_coor - j.Y_coor)**2)**0.5
+                        if dist < min_dist:
+                            min_dist = dist
+                            obj = j
+
+                dist = ((self.x_coor - obj.X_coor)**2 +
+                        (self.y_coor - obj.Y_coor)**2)**0.5
+                if(dist < 1.5):
+                    obj.damage(self.attack_power, array, pseudo_array)
+                    attacked = True
+                    return
                 if(attacked == False):
-                    # find nearest building
-                    min_dist = 10000
-                    for i in range(len(Universal_array)):
-                        for j in Universal_array[i]:
-                            dist = ((self.x_coor - j.X_coor)**2 + (self.y_coor - j.Y_coor)**2)**0.5
-                            if dist < min_dist:
-                                min_dist = dist
-                                obj = j
-                    
                     # j is at min euclidean distance
                     # move towards it
                     if(self.x_coor == obj.X_coor):
                         if(self.y_coor > obj.Y_coor):
                             self.y_coor -= 1
                             self.last_move = 'a'
-                            
 
                         else:
                             self.y_coor += 1
                             self.last_move = 'd'
-                            
-                            
+
                     elif(self.y_coor == obj.Y_coor):
                         if(self.x_coor > obj.X_coor):
                             self.x_coor -= 1
                             self.last_move = 'w'
-                            
+
                         else:
                             self.x_coor += 1
                             self.last_move = 's'
-                            
+
                     elif(self.x_coor > obj.X_coor):
                         if(self.y_coor > obj.Y_coor):
                             self.x_coor -= 1
                             self.y_coor -= 1
-                            self.last_move = '#'
-                            
+                            self.last_move = 'q'
+
                         else:
                             self.x_coor -= 1
                             self.y_coor += 1
-                            self.last_move = '#'
-                            
+                            self.last_move = 'e'
+
                     elif(self.x_coor < obj.X_coor):
                         if(self.y_coor > obj.Y_coor):
                             self.x_coor += 1
                             self.y_coor -= 1
-                            self.last_move = '#'
-                            
+                            self.last_move = 'z'
+
                         else:
                             self.x_coor += 1
                             self.y_coor += 1
-                            self.last_move = '#'
-                    
+                            self.last_move = 'c'
+
                     # make changes accordingly
                     if(pseudo_array[old_X][old_Y] == 'O'):
                         array[old_X][old_Y] = " "
                         pseudo_array[old_X][old_Y] = " "
                     if(pseudo_array[self.x_coor][self.y_coor] == ' '):
-                        array[self.x_coor][self.y_coor] = self.color + "O" + Style.RESET_ALL
+                        array[self.x_coor][self.y_coor] = self.color + \
+                            "O" + Style.RESET_ALL
                         pseudo_array[self.x_coor][self.y_coor] = "O"
-
 
     def health_bar(self, array, pseudo_array):
         health = self.health
@@ -1059,9 +831,8 @@ class Balloons(Character):
                 self.color = Back.YELLOW
             elif self.health > 0:
                 self.color = Back.RED
-            
+
             if(pseudo_array[self.x_coor][self.y_coor] == ' '):
                 array[self.x_coor][self.y_coor] = self.color + \
                     "O" + Style.RESET_ALL
                 pseudo_array[self.x_coor][self.y_coor] = "O"
-        

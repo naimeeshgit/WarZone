@@ -10,7 +10,6 @@ from src.input import Get, input_to
 import src.movingchar as mc
 import src.building as b
 import src.global_variable as gv
-from src.initialise import Game_Map, Universal_array, townhall, list_hut, canon_list, wall
 import src.scenery as scenery
 import time
 
@@ -18,6 +17,12 @@ import time
 if __name__ == "__main__":
     # from config import *
     os.system("clear")
+    replay = []
+    player_char = input("Type queen for Queen or king for king: ")
+    if(player_char != "queen" and player_char != "king"):
+        print("Invalid input")
+        exit()
+    replay.append(player_char)
 
     
     for level in range(3):
@@ -97,11 +102,11 @@ if __name__ == "__main__":
         # print(Game_Map.array[6][15])
         # print(Game_Map.pseudo_array[6][15])
 
-        player_char = input("Enter 1 for Queen or any other key for king: ")
+        
 
-        if(player_char == "1"):
+        if(player_char == "queen"):
             king = mc.Archer_Queen(2,2,Game_Map.array,Game_Map.pseudo_array)
-        else:
+        elif(player_char == "king"):
             king = mc.king(2,2,Game_Map.array,Game_Map.pseudo_array)
             
         barbarians = []
@@ -115,10 +120,10 @@ if __name__ == "__main__":
         balloon_count = 0
 
         universal_iterator = 0
-        replay = []
         timeout = 0.24
 
         quit_game_bool = False
+        queen_leviathan = False
         
         while True:
             # Getting input from user
@@ -139,6 +144,10 @@ if __name__ == "__main__":
             # for i in canon_list:
             #     i.health_bar()
             # for i in wizard_tower_list:
+            #     i.health_bar()
+            # for i  in wall:
+            #     i.health_bar()
+            # for i in list_hut:
             #     i.health_bar()
 
             
@@ -335,20 +344,14 @@ if __name__ == "__main__":
                     elif king.type == "Archer_Queen":
                         print("attack initiated")
                         start = time.time()
-                        temp = 0
-                        while temp < 1:
-                            end = time.time()
-                            temp = end - start      
-                        king.leviathan(Game_Map.array, Game_Map.pseudo_array, Universal_array)
-                        print("damage done")
-                    
-
-
+                        queen_leviathan = True   
+                        Game_Map.array[king.x_coor][king.y_coor] = Back.MAGENTA + king.char + Style.RESET_ALL                 
+                        
 
             # Barbarian Movement and attack
             for i in barbarians:
-                i.bar_move(Game_Map.array, Game_Map.pseudo_array)
-                i.attack(Game_Map.array, Game_Map.pseudo_array)
+                if universal_iterator%2 == 0:
+                   i.bar_move(Game_Map.array, Game_Map.pseudo_array, Universal_array)
                 if(i.health<=0):
                     i.destroy(Game_Map.array, Game_Map.pseudo_array)
 
@@ -373,6 +376,7 @@ if __name__ == "__main__":
                     if(i.health > 0):
                         Game_Map.array[i.X_coor][i.Y_coor] = i.color + 'C' + Style.RESET_ALL
                 
+            # Wizard attack
             for i in wizard_tower_list:
                 if(universal_iterator%3 == 2):
                     i.attack(Game_Map.array, Game_Map.pseudo_array, king, barbarians, archers, balloons)
@@ -380,7 +384,13 @@ if __name__ == "__main__":
                     if(i.health>0):
                         Game_Map.array[i.X_coor][i.Y_coor] = i.color + 'Y' + Style.RESET_ALL
                 
-            
+            # special attack
+            if(queen_leviathan == True and time.time() - start > 1):
+                queen_leviathan = False
+                king.leviathan(Game_Map.array, Game_Map.pseudo_array, Universal_array)
+                print("damage done")
+                Game_Map.array[king.x_coor][king.y_coor] = king.char + Style.RESET_ALL
+                
 
            
         

@@ -48,7 +48,7 @@ class Building:
                     array[i][j] = self.color + char + Style.RESET_ALL
         
     def health_bar(self):
-        print(self.health)
+        print(self.health , end = ' ')
         
     
         
