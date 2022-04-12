@@ -388,12 +388,10 @@ class barbarians(Character):
             man_abs_y = abs(self.y_coor - obj.Y_coor)
 
             if((man_abs_x == 1 and man_abs_y == 0) or (man_abs_y == 1 and man_abs_x == 0) or (man_abs_x == 1 and man_abs_y == 1)):
-                print("Building hai paas mai")
                 obj.damage(self.attack_power, array, pseudo_array)
                 attacked = True
 
             if(attacked == False):
-                print("No buildings to attack")
                 # move towards the nearest building other than wall
                 if(self.x_coor == obj.X_coor):
                     if(self.y_coor > obj.Y_coor):
@@ -429,7 +427,6 @@ class barbarians(Character):
                         self.last_move = 'c'
 
                 if(pseudo_array[self.x_coor][self.y_coor] == ' '):
-                    print("Move freely")
                     pseudo_array[self.x_coor][self.y_coor] = "B"
                     array[self.x_coor][self.y_coor] = self.color + \
                         "B" + Style.RESET_ALL
@@ -439,14 +436,12 @@ class barbarians(Character):
                 else:
                     code = pseudo_array[self.x_coor][self.y_coor]
                     if(code[0] == 'W'):
-                        print("wall pe attack kar raha hai")
                         self.x_coor = old_x
                         self.y_coor = old_y
                         code = code[1:len(code):1]
                         code = int(code)
                         Universal_array[4][code].damage(self.attack_power, array, pseudo_array)
                     else:
-                        print("stack")
                         pseudo_array[old_x][old_y] = " "
                         array[old_x][old_y] = " "
 

@@ -4,7 +4,6 @@ from colorama import Fore, Back, Style
 import os
 import json
 
-from numpy import save
 # from scenery import scenery
 from src.input import Get, input_to
 import src.movingchar as mc
