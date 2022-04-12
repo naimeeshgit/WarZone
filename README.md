@@ -4,17 +4,22 @@ A command line interface game
 1. sudo apt mpg123 install
 
 
+# Player Controlled Characters (PCC):
+- King (type king when game starts)
+- Archer Queen (type queen when game starts)
 
 # Controls:
 
-1. W/S/A/D : king movement
-2. <SPACE> : king normal attack
-3. l : king levaithan axe attack
+1. W/S/A/D : PCC movement
+2. <SPACE> : PCC normal attack
+3. l : PCC levaithan axe attack
 4. h : health spell
 5. r : rage spell
 6. 1/2/3: barbarian spawning
-7. n : nuke
-8. q : quit
+7. 4/5/6: Archer spawning
+8. 7/8/9: balloon spawning
+9. n : nuke
+10. q : quit
 
 
 
@@ -35,7 +40,7 @@ A command line interface game
 
 4. Walls: there are walls which are acting as boundary to protect the village, have size 1*1
 
-5. There are two canons which can shoot within 6-tile range. At a given point the canon targets a single troop and priority is king.
+5. There are two canons which can shoot within 6-tile range. At a given point the canon targets a single troop and priority is PCC.
 
 6. All buildings have a health attribute and the color of the building depends on the following split:
 - Green: 50% to 100% hitpoints
@@ -86,6 +91,32 @@ cannot move or attack any longer.
 2. Score board : A dynamic score board in which barbarians will try to break more walls on way but in an optimistic manner
 
 3. Barbarian count and limit : there is a limit on barbarians that can be deployed
+
+
+
+# PART 2 IMPLEMENTATIONS
+
+#### Archer Queen (25)
+- Movements same as king
+- Normal Attack: <space-bar> : hits an Area of 5*5 8 tiles far from it
+
+#### Extra Troops (30)
+##### Archers:
+- hit buildings from a distance 
+
+##### Balloons:
+- prioritise hitting defensive buildings
+
+#### Wizard Tower (20):
+- hits troops with an AoE of 3*3
+
+#### Levels (25)
+- game has 3 levels
+
+#### BONUS
+##### Archer Queen’s Eagle Arrow (15):
+- hits exactly after 1 second of pressing the special attack button <l>
+- hits targets at 16 tiles distance with 9*9 AoE
 
 
 
