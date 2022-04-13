@@ -4,6 +4,8 @@ from colorama import Fore, Back, Style
 import os
 import json
 
+from numpy import true_divide
+
 # from scenery import scenery
 from src.input import Get, input_to
 import src.movingchar as mc
@@ -27,12 +29,18 @@ for input_ in replay:
         json_file.close()
         break
 
+
+loop_num = 0
+level_1_mark = 0
+level_2_mark = 0
 # print(replay)
 # exit()
 
 if(player_char == "queen" or player_char == "king"):
     with open("replays/" + input_file + '.json') as json_file:
         replay = json.load(json_file)
+    
+    game_score = 0
 
     for level in range(3):
         Game_Map = scenery.GameBoard()
@@ -134,10 +142,17 @@ if(player_char == "queen" or player_char == "king"):
 
         quit_game_bool = False
         queen_leviathan = False
-
-        for input_ in replay:
+        game_over = False
+         
+        while(1):
             # print(input_)
-            time.sleep(0.15)
+            input_ = replay[loop_num]
+            loop_num += 1
+            if(loop_num >= len(replay)):
+                game_over = True
+                break
+
+            time.sleep(timeout)
 
             os.system("clear")
             universal_iterator = universal_iterator + 1
@@ -149,25 +164,14 @@ if(player_char == "queen" or player_char == "king"):
                 print(king.health)
 
             print(king.type)
-
-            # for i in canon_list:
-            #     i.health_bar()
-            # for i in wizard_tower_list:
-            #     i.health_bar()
-            # for i in wall:
-            #     i.health_bar()
-            # for i in list_hut:
-            #     i.health_bar()
-
-            # Nuke
-            if(gv.Nuke == True and gv.Nuke_count == 0):
+            if(gv.Nuke == True and gv.Nuke_count == 0 and townhall.health > 0):
                 print(Fore.LIGHTMAGENTA_EX +
                         "Nuke is launched" + Style.RESET_ALL)
                 Nuke = mc.Nuke(int(gv.m/2), 3, Game_Map.array,
                                 Game_Map.pseudo_array)
                 gv.Nuke_count += 1
 
-            elif gv.Nuke == True and gv.Nuke_count == 1 and gv.Nuke_isdestroyed == False:
+            elif gv.Nuke == True and gv.Nuke_count == 1 and gv.Nuke_isdestroyed == False and townhall.health > 0:
                 Nuke.move(Game_Map.array, Game_Map.pseudo_array,
                             Universal_array)
                 print("Nuke is approaching the townhall")
@@ -218,10 +222,15 @@ if(player_char == "queen" or player_char == "king"):
             if(game_won == True):
                 if(level == 0):
                     print("Lol This was Easy one")
+                    level_1_mark = loop_num
+                    game_score += game_points
                 elif(level == 1):
                     print("Nice Nice Nice")
+                    level_2_mark = loop_num
+                    game_score += game_points
                 elif(level == 2):
                     print(Fore.RED + "GAME WON" + Style.RESET_ALL)
+                    game_score += game_points
                 break
             if(game_lost == True):
                 print(Fore.RED + "YOU LOST, koi baat nahi , sab ke liye nhi bna ye game")
@@ -306,7 +315,7 @@ if(player_char == "queen" or player_char == "king"):
                 timeout /= 2
             elif input_ == 'k':
                 pass
-            elif input_ == 'n':
+            elif input_ == 'n' and level == 0:
                 gv.Nuke = True
 
             # King Controls and attack
@@ -384,8 +393,19 @@ if(player_char == "queen" or player_char == "king"):
                 Game_Map.array[king.x_coor][king.y_coor] = king.char + \
                     Style.RESET_ALL
 
+            game_lost = Game_Map.game_lost(
+                king, barbarians, barbarian_count, archers, archer_count, balloons, balloon_count)
+            if game_lost == True:
+                print("YOU LOSE")
+                break
+
         if gv.Lost == True:
             break
 
         if quit_game_bool == True:
             break
+
+        if game_over == True:
+            break
+    
+    print("FINAL SCORE :", game_score)

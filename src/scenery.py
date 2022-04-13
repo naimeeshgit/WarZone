@@ -44,30 +44,36 @@ class GameBoard:
     def game_lost(self, king, barbarians, barbarian_count, archers, archer_count, balloons, ballon_count):
         king_death = -1
         barbarians_death = -1
+        archers_death = -1
+        balloons_death = -1
         if king.health <= 0:
-            print(Fore.RED + "King is dead!")
+            print(Fore.RED + king.type + " is dead!")
             king_death = 0
-        for i in barbarians:
-            if barbarian_count == 5:
-                if i.health > 0:
-                    break
-                else:
-                    barbarians_death = 0
-        for i in archers:
-            if archer_count == 5:
-                if i.health > 0:
-                    break
-                else:
-                    archers_death = 0
-        for i in balloons:
-            if ballon_count == 2:
-                if i.health > 0:
-                    break
-                else:
-                    balloons_death = 0
 
+        bar_count = 0
+        for i in barbarians:
+            if i.health <= 0:
+               bar_count+=1
+        if bar_count == barbarian_count:
+            barbarians_death = 0
+        
+        archer_count = 0
+        for i in archers:
+            if i.health <= 0:
+                archer_count+=1
+        if archer_count == archer_count:
+
+            archers_death = 0
+
+        ballon_count = 0
+        for i in balloons:
+            if i.health <= 0:
+                ballon_count+=1
+        if ballon_count == ballon_count:
+            balloons_death = 0
         
         if(king_death == 0 and barbarians_death == 0 and archers_death == 0 and balloons_death == 0):
+            print("YOU LOSE")
             return True
         else:
             return False
@@ -97,6 +103,7 @@ class GameBoard:
                 
 
         print(Fore.BLUE + "SCORE: ", game_points)
+        return game_points
             
                 
         
